@@ -2,10 +2,9 @@ import subprocess
 import re
 
 def extract_numbers(output):
-    # Use regular expression to find lines containing "the input num is" and extract the corresponding numbers
-    lines_with_input = [line for line in output.split('\n') if "the input num is" in line]
-    numbers = [int(re.search(r'(\b-?\d+\b)', line).group()) for line in lines_with_input]
-    return numbers
+    # Use regular expression to extract numbers from the output
+    numbers = re.findall(r'Blackpink in your area\n(\S+)', output)
+    return [int(num) for num in numbers]
 
 if __name__ == "__main__":
     # Store the output of each subprocess run
@@ -35,3 +34,4 @@ if __name__ == "__main__":
     # Sum the extracted numbers from the output
     total_sum = sum(sum(extract_numbers(output)) for output in outputs)
     print(f"Total Sum of Numbers: {total_sum}")
+
