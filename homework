@@ -1,0 +1,36 @@
+import subprocess
+import re
+
+def extract_numbers(output):
+    # Use regular expression to extract numbers from the output
+    numbers = re.findall(r'\b\d+\b', output)
+    return [int(num) for num in numbers]
+
+if __name__ == "__main__":
+    # Store the output of each subprocess run
+    outputs = []
+
+    # First run
+    print(f"first run num=100 XX=90")
+    result = subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    outputs.append(result.stdout.decode('utf-8'))
+
+    print(f"------------------------------------------------")
+
+    # Second run
+    print(f"second run num=-10 XX=-90")
+    result = subprocess.run(["python", "firstpy.py", "--num", "-10", "--XX", "-90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    outputs.append(result.stdout.decode('utf-8'))
+
+    print(f"------------------------------------------------")
+
+    # Third run
+    print(f"third run num=0")
+    result = subprocess.run(["python", "firstpy.py", "--num", "0"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    outputs.append(result.stdout.decode('utf-8'))
+
+    print(f"------------------------------------------------")
+
+    # Sum the extracted numbers from the output
+    total_sum = sum(sum(extract_numbers(output)) for output in outputs)
+    print(f"Total Sum of Numbers: {total_sum}")
