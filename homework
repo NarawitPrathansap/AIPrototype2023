@@ -12,6 +12,7 @@ if __name__ == "__main__":
 
     # First run
     print(f"first run num=100 XX=90")
+    subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"])
     result = subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     outputs.append(result.stdout.decode('utf-8'))
 
@@ -19,6 +20,7 @@ if __name__ == "__main__":
 
     # Second run
     print(f"second run num=-10 XX=-90")
+    subprocess.run(["python","firstpy.py", "--num", "-10", "--XX", "-90"])
     result = subprocess.run(["python", "firstpy.py", "--num", "-10", "--XX", "-90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     outputs.append(result.stdout.decode('utf-8'))
 
@@ -26,6 +28,7 @@ if __name__ == "__main__":
 
     # Third run
     print(f"third run num=0")
+    subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"])
     result = subprocess.run(["python", "firstpy.py", "--num", "0"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     outputs.append(result.stdout.decode('utf-8'))
 
