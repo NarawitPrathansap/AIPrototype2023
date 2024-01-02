@@ -2,9 +2,10 @@ import subprocess
 import re
 
 def extract_numbers(output):
-    # Use regular expression to extract numbers from the output
-    numbers = re.findall(r'\b\d+\b', output)
-    return [int(num) for num in numbers]
+    # Use regular expression to find lines containing "the input num is" and extract the corresponding numbers
+    lines_with_input = [line for line in output.split('\n') if "the input num is" in line]
+    numbers = [int(re.search(r'(\b-?\d+\b)', line).group()) for line in lines_with_input]
+    return numbers
 
 if __name__ == "__main__":
     # Store the output of each subprocess run
@@ -12,25 +13,22 @@ if __name__ == "__main__":
 
     # First run
     print(f"first run num=100 XX=90")
-    subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"])
-    result = subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    outputs.append(result.stdout.decode('utf-8'))
+    result = subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    outputs.append(result.stdout)
 
     print(f"------------------------------------------------")
 
     # Second run
     print(f"second run num=-10 XX=-90")
-    subprocess.run(["python","firstpy.py", "--num", "-10", "--XX", "-90"])
-    result = subprocess.run(["python", "firstpy.py", "--num", "-10", "--XX", "-90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    outputs.append(result.stdout.decode('utf-8'))
+    result = subprocess.run(["python", "firstpy.py", "--num", "-10", "--XX", "-90"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    outputs.append(result.stdout)
 
     print(f"------------------------------------------------")
 
     # Third run
     print(f"third run num=0")
-    subprocess.run(["python", "firstpy.py", "--num", "100", "--XX", "90"])
-    result = subprocess.run(["python", "firstpy.py", "--num", "0"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    outputs.append(result.stdout.decode('utf-8'))
+    result = subprocess.run(["python", "firstpy.py", "--num", "0"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    outputs.append(result.stdout)
 
     print(f"------------------------------------------------")
 
