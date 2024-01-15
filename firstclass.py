@@ -9,7 +9,7 @@ def helloworld():
     return "Hello, World!"
 
 @app.route("/name")  
-def helloworld():
+def hellowfirst():
     return "Hello, First!"
 
 if __name__ == "__main__":
