@@ -1,10 +1,22 @@
-import sys
+from email import message
 from flask import Flask, request, render_template, make_response
-
+import sys
 import json
 
 app = Flask(__name__)
 
+#api
+@app.route('/request',methods=['POST'])
+def web_service_API():
+    
+    payload = request.data.decode('utf-8')
+    inmessage = json.loads(payload)
+
+    print(message)
+
+    json_data = json.dumps({'y':'recieved'})
+    return json_data 
+    
 @app.route("/")  
 def helloworld():
     return "Hello, World!"
