@@ -15,13 +15,20 @@ def hellowfirst():
 
 @app.route("/home",methods=['POST','GET'])  
 def homefn():
-    print('we are in home',file=sys.stdout)
+    if request.method == "GET":
 
-    namein = request.form.get("fname")
-    lastnamein = request.form.get("lname")
-    print(namein, file=sys.stdout)
-    print(lastnamein,file=sys.stdout)
-    return render_template("home.html",name=namein)
+        print('we are in home(GET)',file=sys.stdout)
+        namein = request.args.get("fname")
+        print(namein, file=sys.stdout)
+        return render_template("home.html",name=namein)
+
+    elif request.method == "POST":
+        print('we are in home(POST)',file=sys.stdout)
+        namein = request.form.get("fname")
+        lastnamein = request.form.get("lname")
+        print(namein, file=sys.stdout)
+        print(lastnamein,file=sys.stdout)
+        return render_template("home.html",name=namein)
 
 
 if __name__ == "__main__":
