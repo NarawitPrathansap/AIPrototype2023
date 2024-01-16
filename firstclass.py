@@ -1,3 +1,4 @@
+import sys
 from flask import Flask, request, render_template, make_response 
 
 import json
@@ -12,9 +13,15 @@ def helloworld():
 def hellowfirst():
     return "Hello, First!"
 
-@app.route("/home2")  
-def home2():
-    return render_template("home.html",name='first')
+@app.route("/home")  
+def homefn():
+    print('we are in home',file=sys.stdout)
+
+    namein = request.form.get("fname")
+    lastnamein = request.form.get("lname")
+    print(namein, file=sys.stdout)
+    print(lastnamein,file=sys.stdout)
+    return render_template("home.html",name=namein)
 
 
 if __name__ == "__main__":
