@@ -13,7 +13,7 @@ def helloworld():
 def hellowfirst():
     return "Hello, First!"
 
-@app.route("/home")  
+@app.route("/home",methods=['POST','GET'])  
 def homefn():
     print('we are in home',file=sys.stdout)
 
