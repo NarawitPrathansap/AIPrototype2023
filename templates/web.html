@@ -1,15 +1,101 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DENTAI - Upload</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Title with Circular Logo and File Upload</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            padding: 10px 20px;
+            text-align: left; /* Aligns the top-left logo */
+        }
+        .upper-left-logo img {
+            height: 50px; /* Adjust as needed */
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 20px 0; /* Adjust spacing around the centered logo */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1; /* Takes up available space */
+            text-align: center;
+        }
+        img.logo {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 20px 0; /* Adjust spacing around the centered logo */
+        }
+        .upload-box, .chat-input {
+            border: 2px solid #4DAF7C;
+            color: #4DAF7C;
+            padding: 20px;
+            width: 60%;
+            margin: 20px auto;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            display: flex;
+            justify-content: space-between; /* Aligns text and file input */
+        }
+        .chat-input input[type="text"], .chat-input input[type="file"] {
+            flex-grow: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .chat-input button {
+            padding: 10px 15px;
+            background-color: #4DAF7C;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        a {
+            color: #4DAF7C;
+        }
+        h1 {
+        font-size: 5.5em; /* Makes the text larger */
+        font-weight: bold; /* Makes the text bold */
+        font-style: italic; /* Makes the text italicized */
+    }
+    </style>
 </head>
 <body>
-    <h1>Upload a Panoramic Radiograph</h1>
-    <form action="/" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
+    <header>
+        <div class="upper-left-logo">
+            <img src="./logo_app.jpg" alt="Logo"> <!-- Top-left corner logo -->
+        </div>
+    </header>
+    <div class="container">
+        <img src="./logo_app.jpg" alt="Logo" class="logo"> <!-- Centered logo -->
+        <h1>DENT AI</h1>
+
+        <!-- Upload and text input box -->
+        <div class="chat-input">
+            <input type="text" name="text_message" placeholder="Type a question...">
+            <input type="file" name="file_upload">
+            <button type="submit">Send</button>
+        </div>
+
+        <p>This is a paragraph of text to demonstrate a simple HTML page structure with the title centered.</p>
+        <a href="https://www.example.com">Click here</a> to visit Example.com.
+    </div>
 </body>
 </html>

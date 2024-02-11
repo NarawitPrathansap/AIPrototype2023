@@ -6,15 +6,6 @@ import os
 
 app = Flask(__name__)
 
-
-# Configuration for file uploads
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-# Ensure the upload folder exists
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 #api
 @app.route('/request',methods=['POST'])
 def web_service_API():
