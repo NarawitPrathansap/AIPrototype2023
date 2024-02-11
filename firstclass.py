@@ -1,10 +1,20 @@
 from email import message
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response,url_for
 import sys
 import json
+import os
 
 app = Flask(__name__)
 
+
+# Configuration for file uploads
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# Ensure the upload folder exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 #api
 @app.route('/request',methods=['POST'])
 def web_service_API():
@@ -22,7 +32,7 @@ def helloworld():
     return "Hello, World!"
 
 @app.route("/name")  
-def hellowfirst():
+def hellofirst():
     return "Hello, First!"
 
 @app.route("/home",methods=['POST','GET'])  
@@ -59,6 +69,9 @@ def upload_file():
     </form>
     '''
 
-
+@app.route('/webapp',methods=['GET','POST'])
+def deeptooth_webapp():
+    if request.method == 'POST':
+        return render_template('web.html')
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True,port=5001)#host='0.0.0.0',port=5001
