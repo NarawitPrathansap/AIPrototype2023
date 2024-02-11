@@ -14,7 +14,8 @@ def upload():
     text = request.form.get('message')
     file = request.files.get('file')
     # Save file and process text as needed
-    return f"Message: {text}, File: {file.filename if file else 'None'}"
+    return render_template("web.html",name='upload complete')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True,port=5001)#host='0.0.0.0',port=5001
