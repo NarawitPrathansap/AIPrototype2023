@@ -60,9 +60,5 @@ def upload_file():
     </form>
     '''
 
-@app.route('/webapp',methods=['GET','POST'])
-def deeptooth_webapp():
-    if request.method == 'POST':
-        return render_template('web.html')
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True,port=5001)#host='0.0.0.0',port=5001
