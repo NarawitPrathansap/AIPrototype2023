@@ -1,42 +1,46 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for,redirect
 import sys
 import json
 import os
 
 app = Flask(__name__)
 
+# This is the path where you want to save the uploaded files
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Ensure the upload folder exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 @app.route("/home")  
 def homefn():
     return render_template("web.html",title='home')
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if request.method == 'POST':
-        # Capture the text input
-        message = request.form['message']
-        print(f"Message: {message}")  # Do something with the message
-        
-        # Capture and save the file
-        file = request.files['file']
-        if file:  # Check if the file exists
-            filename = file.filename
-            save_path = os.path.join('uploads', filename)  # Define save path
-            file.save(save_path)  # Save file to the defined path
-            print(f"File saved to {save_path}")  # Logging
+@app.route('/submit', methods=['POST'])
+def submit_text_and_file():
+    # Check if the post request has the text part
+    if 'text_message' in request.form:
+        text_message = request.form['text_message']
+        print("Received text message:", text_message)
 
-        return render_template("web.html", title='Upload Complete', name='Upload complete')
+    # Check if the post request has the file part
+    if 'file_upload' in request.files:
+        file = request.files['file_upload']
+        if file.filename != '':
+            # Save the file to the uploads folder
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(filepath)
+            print(f"File {file.filename} uploaded successfully.")
+        else:
+            print("No file was uploaded.")
 
-    # Fallback HTML form (consider moving this to a dedicated template)
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+    # Redirect or respond after handling the form submission
+    return redirect(url_for('submit_success'))
+
+@app.route('/submit-success')
+def submit_success():
+    return "Submission successful!"
 
 
 if __name__ == "__main__":
