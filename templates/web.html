@@ -17,20 +17,20 @@
         }
         header {
             padding: 10px 20px;
-            text-align: left; /* Aligns the top-left logo */
+            text-align: left;
         }
         .upper-left-logo img {
-            height: 50px; /* Adjust as needed */
+            height: 50px;
             object-fit: cover;
             border-radius: 50%;
-            margin: 20px 0; /* Adjust spacing around the centered logo */
+            margin: 20px 0;
         }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-grow: 1; /* Takes up available space */
+            flex-grow: 1;
             text-align: center;
         }
         img.logo {
@@ -38,7 +38,7 @@
             height: 200px;
             object-fit: cover;
             border-radius: 50%;
-            margin: 20px 0; /* Adjust spacing around the centered logo */
+            margin: 20px 0;
         }
         .upload-box, .chat-input {
             border: 2px solid #4DAF7C;
@@ -50,7 +50,7 @@
             background: rgba(255, 255, 255, 0.1);
             position: relative;
             display: flex;
-            justify-content: space-between; /* Aligns text and file input */
+            justify-content: space-between;
         }
         .chat-input input[type="text"], .chat-input input[type="file"] {
             flex-grow: 1;
@@ -76,44 +76,37 @@
             text-align: center;
             color: white;
         }
-        
         .title-section {
-            background-color: #000; /* Assuming a dark background */
-            /* Add background styling such as images or gradients */
+            background-color: #000;
         }
         .bubble-background {
             position: relative;
-            background-color: #000; /* Background color of the section */
-            color: #fff; /* Text color */
+            background-color: #000;
+            color: #fff;
             text-align: center;
-            padding: 50px 20px; /* Padding around the content */
-            overflow: hidden; /* Ensures that the bubbles don't overflow the section */
+            padding: 50px 20px;
+            overflow: hidden;
         }
-
         .bubble-background::before,
         .bubble-background::after {
             content: '';
             position: absolute;
-            border-radius: 50%; /* Makes the shape circular */
-            background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white for bubble color */
-            z-index: 0; /* Places the bubbles behind the content */
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: 0;
         }
-
         .bubble-background::before {
-            width: 200px; /* Size of the first bubble */
-            height: 200px; /* Size of the first bubble */
-            top: 10%; /* Position from the top */
-            left: 15%; /* Position from the left */
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 15%;
         }
-
         .bubble-background::after {
-            width: 300px; /* Size of the second bubble */
-            height: 300px; /* Size of the second bubble */
-            bottom: 15%; /* Position from the bottom */
-            right: 20%; /* Position from the right */
+            width: 300px;
+            height: 300px;
+            bottom: 15%;
+            right: 20%;
         }
-
-        /* Ensures content is above the bubbles */
         .bubble-background > * {
             position: relative;
             z-index: 1;
@@ -122,33 +115,32 @@
             color: #4DAF7C;
         }
         h1 {
-        font-size: 5.5em; /* Makes the text larger */
-        font-weight: bold; /* Makes the text bold */
-        font-style: italic; /* Makes the text italicized */
+        font-size: 5.5em;
+        font-weight: bold;
+        font-style: italic;
         }
         h2 {
             font-size: 2.5em;
             margin: 0.5em 0;
         }
-        
     </style>
 </head>
 <body>
     <header>
         <div class="upper-left-logo">
-            <img src="./templates/logo_app.jpg" alt="Logo"> <!-- Top-left corner logo -->
+            <img src="logo_app.jpg" alt="Logo">
         </div>
     </header>
     <div class="container">
-        <img src="./templates/logo_app.jpg" alt="Logo" class="logo"> <!-- Centered logo -->
+        <img src="logo_app.jpg" alt="Logo" class="logo">
         <h1>DENTAI</h1>
 
-        <!-- Upload and text input box -->
-        <div class="chat-input">
+        <!-- Modified form with action, method, and enctype attributes -->
+        <form class="chat-input" action="/submit" method="post" enctype="multipart/form-data">
             <input type="text" name="text_message" placeholder="Type a question...">
             <input type="file" name="file_upload">
             <button type="submit">Send</button>
-        </div>
+        </form>
 
         <p>This is a paragraph of text to demonstrate a simple HTML page structure with the title centered.</p>
         <a href="https://www.example.com">Click here</a> to visit Example.com.
