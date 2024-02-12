@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 import sys
 import json
+import os
 
 app = Flask(__name__)
 
@@ -12,10 +13,21 @@ def homefn():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-        file = request.files['file']     
-        file.save('filename')
-        return render_template("web.html",name='upload complete')
+        # Capture the text input
+        message = request.form['message']
+        print(f"Message: {message}")  # Do something with the message
+        
+        # Capture and save the file
+        file = request.files['file']
+        if file:  # Check if the file exists
+            filename = file.filename
+            save_path = os.path.join('uploads', filename)  # Define save path
+            file.save(save_path)  # Save file to the defined path
+            print(f"File saved to {save_path}")  # Logging
 
+        return render_template("web.html", title='Upload Complete', name='Upload complete')
+
+    # Fallback HTML form (consider moving this to a dedicated template)
     return '''
     <!doctype html>
     <title>Upload new File</title>
