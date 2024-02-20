@@ -11,7 +11,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Ensure the upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-model = tf.keras.models.load_model('path/to/your/model.h5')
+#model = tf.keras.models.load_model('path/to/your/model.h5')
 
 
 @app.route("/home")  
