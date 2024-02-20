@@ -1,3 +1,4 @@
+import sqlite3 #sql 
 from flask import Flask, request, render_template, url_for,redirect
 import sys
 import json
