@@ -3,14 +3,15 @@ Github นี้เป็นส่วนหนึ่งของรายวิ�
 
 
 ## Table of Contents
-- [Linux (Ubuntu) Commands](#linux-ubuntu-commands)
-- [Azure Cloud Operations](#azure-cloud-operations)
-- [Setup Environment with Miniconda](#setup-environment-with-miniconda)
-- [Github setup](#github-setup)
-- [GitHub Version Control](#github-version-control)
-- [Deep Learning Resources](#deep-learning-resources)
-- [Web Page](#web-page)
-- [Web Appication](#web-application)
+- [:penguin: Linux (Ubuntu) Commands](#penguin-linux-ubuntu-commands)
+  - [Basic Command Line Operations](#basic-command-line-operations)
+- [:cloud: Azure Cloud Operations](#cloud-azure-cloud-operations)
+- [:snake: Setup Environment with Miniconda](#snake-setup-environment-with-miniconda)
+- [:octocat: Github setup](#octocat-github-setup)
+- [:octocat: GitHub Version Control](#octocat-github-version-control)
+- [:brain: Deep Learning Implementation](#brain-deep-learning-implementation)
+- [⭐ Web page](#-web-page)
+- [:globe_with_meridians: Web Application](#globe_with_meridians-web-application)
 
 ## :penguin: Linux (Ubuntu) Commands
 ### Basic Command Line Operations
