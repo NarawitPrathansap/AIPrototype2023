@@ -1,14 +1,13 @@
-<!-- templates/result.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Result</title>
+    <title>Prediction Result</title>
 </head>
 <body>
-    <h2>Result</h2>
-    <p>Question: {{ question }}</p>
-    <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Uploaded Image">
-    <p>Prediction: {{ result }}</p>
-    <a href="/">Try another image</a>
+    <h1>Prediction Result</h1>
+    <p><strong>Question:</strong> {{ question }}</p>
+    <p><strong>Prediction:</strong> {{ prediction }}</p>
+    <img src="{{ url_for('static', filename=image) }}" alt="Uploaded Image">
+    <a href="{{ url_for('index') }}">Try another prediction</a>
 </body>
 </html>
