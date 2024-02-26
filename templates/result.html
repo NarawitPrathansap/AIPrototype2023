@@ -7,7 +7,7 @@
     <h1>Prediction Result</h1>
     <p><strong>Question:</strong> {{ question }}</p>
     <p><strong>Prediction:</strong> {{ prediction }}</p>
-    <img src="{{ url_for('uploaded_file', filename=image_filename) }}" alt="Uploaded Image">
+    <img src="{{ image_url }}" alt="Uploaded Image">
     <a href="{{ url_for('index') }}">Try another prediction</a>
 </body>
 </html>
