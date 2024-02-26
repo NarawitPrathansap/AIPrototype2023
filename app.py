@@ -1,31 +1,34 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'uploads'  # Make sure this directory exists
 
-# This is the path to the upload directory
-app.config['UPLOAD_FOLDER'] = 'uploads/'
-# Make sure to create the directory if it doesn't exist
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
+# Ensure the function to allow certain file types
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg'}
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # Check if the post request has the file part
         if 'file' not in request.files:
             return 'No file part'
         file = request.files['file']
         question = request.form['question']
         
-        if file.filename == '':
-            return 'No selected file'
-        if file:
-            filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filename)
-            # Here you would normally pass the image and question to your model for prediction
-            # For demonstration, we'll just return the question and filename
-            return render_template('result.html', question=question, filename=file.filename)
+        if file.filename == '' or not allowed_file(file.filename):
+            return 'No selected file or file type not allowed'
+        
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # Pass the filename to the template to display the image
+        return render_template('result.html', question=question, filename=filename)
     
     return render_template('index.html')
 
