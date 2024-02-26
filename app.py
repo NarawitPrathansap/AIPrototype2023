@@ -1,12 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,send_from_directory
 import os
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/predict', methods=['POST'])
 def predict():
