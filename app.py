@@ -19,11 +19,15 @@ def predict():
         image = request.files['image']
         question = request.form['question']
         if image:
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
+            filename = image.filename
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             image.save(image_path)
+            # Ensure the filename is safe to use in a URL
+            # Flask's secure_filename function can be used here (from werkzeug.utils import secure_filename)
+            image_url = url_for('uploaded_file', filename=filename)
             # Here you would normally process the image and question with your model
-            prediction = "Dummy prediction result" # Replace with actual prediction logic
-            return render_template('result.html', image=image_path, question=question, prediction=prediction)
+            prediction = "Dummy prediction result"  # Replace with actual prediction logic
+            return render_template('result.html', image_url=image_url, question=question, prediction=prediction)
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
