@@ -1,12 +1,14 @@
+<!-- templates/result.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Result</title>
 </head>
 <body>
-    <h1>Result</h1>
+    <h2>Result</h2>
     <p>Question: {{ question }}</p>
-    <p>Filename: {{ filename }}</p>
-    <!-- You can display the prediction result here -->
+    <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Uploaded Image">
+    <p>Prediction: {{ result }}</p>
+    <a href="/">Try another image</a>
 </body>
 </html>
