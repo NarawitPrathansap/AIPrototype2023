@@ -5,6 +5,7 @@ Github นี้เป็นส่วนหนึ่งของรายวิ�
 ## Table of Contents
 - [:penguin: Linux (Ubuntu) Commands](#penguin-linux-ubuntu-commands)
   - [Basic Command Line Operations](#basic-command-line-operations)
+  - [Ubuntu](#ubuntu)
 - [:cloud: Azure Cloud Operations](#cloud-azure-cloud-operations)
 - [:snake: Setup Environment with Miniconda](#snake-setup-environment-with-miniconda)
 - [:octocat: Github setup](#octocat-github-setup)
@@ -27,6 +28,13 @@ Terminal คือสะพานที่เชื่อมระหว่า�
 - `cp -R`: คำสั่งที่ใช้สำหรับ copy folder.
 - `mv`: คำสั่งที่ใช้สำหรับการย้ายไฟล์.
 - `code` : เป็นคำสั่งที่ใช้สำหรับรัน vscode บน linux
+
+### Ubuntu
+- [Argparse](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/firstpy.py)
+- [Flask](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/firstclass.py)
+- [Python subprocess](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/python_subprocess.py)
+- [Web_service_request](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/Web_service_request.ipynb)
+- [Homework](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/homework)
 
 ### :cloud: Azure Cloud Operations
 Interact with VMs and manage resources on the Azure cloud platform.[Azure](https://portal.azure.com/#home)
