@@ -40,20 +40,25 @@ def predict():
             # Load the image
             img = Image.open(image_path)
             width, height = img.size
-            
-            # Cut the image in half and flip the left side
-            left_side = img.crop((0, 0, width // 2, height))
-            flipped_left_side = left_side.transpose(Image.FLIP_LEFT_RIGHT)
-            
-            # Create a new image and paste the flipped left side to the right side
+            frac = 0.6
+
+            # Correct the crop method call, should use a tuple for the box
+            cropped_left = img.crop((0, 0, width * frac, height))
+            cropped_right = img.crop((width * (1 - frac), 0, width, height))
+
+            # Flip the right side
+            flipped_left_side = cropped_right.transpose(Image.FLIP_LEFT_RIGHT)
+
+            # Create a new image and paste the flipped side
             new_image = Image.new('RGB', (width, height))
-            new_image.paste(flipped_left_side, (width // 2, 0))
-            
+            new_image.paste(cropped_left, (0, 0))  # Paste the original left side
+            new_image.paste(flipped_left_side, (int(width * frac), 0))  # Correct the position to paste the flipped side
+
             # Save the modified image
             new_filename = 'modified_' + filename
             new_image_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
             new_image.save(new_image_path)
-            
+
             image_url = url_for('uploaded_file', filename=new_filename)
             print("Received question:", question)
             prediction = "Dummy prediction result"  # Replace with your model's prediction logic
