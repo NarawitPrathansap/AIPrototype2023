@@ -33,7 +33,7 @@ Terminal คือสะพานที่เชื่อมระหว่า�
 - [Argparse](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/firstpy.py)
 - [Flask](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/firstclass.py)
 - [Python subprocess](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/python_subprocess.py)
-- [Web_service_request](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/Web_service_request.ipynb)
+- [Web service request](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/Web_service_request.ipynb)
 - [Homework](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/homework)
 
 ### :cloud: Azure Cloud Operations
