@@ -8,18 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
-        body, html {
+        body {
             margin: 0;
             padding: 0;
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            background-color: #000;
+            color: #fff;
         }
         header {
-            padding: 10px 20px;
+            padding: 20px;
             text-align: left;
         }
         .upper-left-logo img {
@@ -33,7 +30,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-grow: 1;
+            min-height: 100vh;
             text-align: center;
         }
         img.logo {
@@ -44,48 +41,50 @@
             margin: 20px 0;
         }
         .chat-input {
-            border: 2px solid white;
-            color: #4DAF7C;
-            padding: 10px;
-            width: 80%;
-            margin: 20px auto;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
             display: flex;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
         }
         .chat-input input[type="text"] {
             flex-grow: 1;
+            margin-right: 10px;
             padding: 10px;
-            margin: 10px;
-            background: transparent;
-            border: 1px solid #ccc;
-            border-radius: 20px;
+            border: 2px solid #007bff;
+            border-radius: 15px;
             outline: none;
-            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            color: #000;
         }
         .chat-input input[type="text"]::placeholder {
             color: lightgrey;
         }
         .chat-input button {
-            cursor: pointer;
-            background: none;
-            border: 1px solid white;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
             color: white;
             border-radius: 15px;
-            padding: 10px;
-            margin-left: 10px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
         }
         .chat-input button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background-color: #0056b3;
         }
         .file-upload-icon {
             cursor: pointer;
-            background: none;
+            background: url('https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/upload_image_icon_no_bg.png') no-repeat center center;
+            background-size: contain;
             border: none;
             color: white;
             margin-right: 20px;
+            width: 50px; /* Adjust as needed */
+            height: 50px; /* Adjust as needed */
+            display: inline-block;
         }
         .file-upload-icon input[type="file"] {
             display: none;
@@ -102,60 +101,17 @@
         .title-section {
             background-color: #000;
         }
-        .bubble-background {
-            position: relative;
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            padding: 50px 20px;
-            overflow: hidden;
-        }
-        .bubble-background::before,
-        .bubble-background::after {
-        
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.2);
-            z-index: 0;
-            animation: ripple-animation 3s infinite;
-        }
-        @keyframes ripple-animation {
-            0% {
-              transform: scale(0);
-              opacity: 1;
-            }
-            100% {
-              transform: scale(2.5);
-              opacity: 0;
-            }
-        }
-        .bubble-background::before {
-            width: 200px;
-            height: 200px;
-            top: calc(50% - 100px);
-            left: calc(50% - 100px);
-        }
-        .bubble-background::after {
-            width: 300px;
-            height: 300px;
-            top: calc(50% - 150px);
-            left: calc(50% - 150px);
-        }
-        .bubble-background > * {
-            position: relative;
-            z-index: 1;
-        }
         a {
             color: #4DAF7C;
         }
         h1 {
-            font-size: 5.5em;
+            font-size: 7em;
             font-weight: bold;
             font-style: italic;
+            margin: 0;
         }
         h2 {
-            font-size: 2.5em;
+            font-size: 5em;
             margin: 0.5em 0;
             font-style: italic;
         }
@@ -172,28 +128,31 @@
             text-align: center;
         }
         .chat-display {
-            width: 80%;
-            margin: 20px auto;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            background: #f8f9fa;
+            color: black;
             padding: 10px;
-            max-height: 300px;
+            display: flex;
+            flex-direction: column;
             overflow-y: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
+            margin-bottom: 10px;
+            max-width: 300px; /* Adjust the maximum width */
+            max-height: 400px; /* Adjust the maximum height */
         }
         .message {
-            background: #333;
-            color: white;
-            padding: 5px 10px;
-            margin: 5px;
-            border-radius: 10px;
+            max-width: 80%;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 15px;
         }
-        .message img {
-            max-width: 100%;
-            border-radius: 10px;
+        .user-message {
+            align-self: flex-end;
+            background-color: #080808;
+            color: white;
         }
         h3 {
-            font-family: 'Roboto', sans-serif;
-            font-size: 1.5em;
+            font-size: 3em;
             margin: 0.5em 0;
             font-style: italic;
         }
@@ -209,7 +168,43 @@
         .hidden {
             display: none;
         }
-        
+        .bot-message {
+            align-self: flex-start;
+            background-color: #e9ecef;
+            color: black;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            color: black; /* For contrast */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -219,20 +214,19 @@
         </div>
     </header>
     <div class="container">
-        <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/logo_app.jpg" alt="Logo" class="logo">
         <h1>DENTAI</h1>
-
+        <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/logo_app.jpg" alt="Logo" class="logo">
         <form id="userForm" class="chat-input" enctype="multipart/form-data">
             <img id="uploaded-image" class="image-preview">
             <label for="userFile" class="file-upload-icon">
-                <i class="fas fa-upload"></i>
                 <input type="file" id="userFile" onchange="displayImage(this)" accept="image/*" required/>
             </label>
             <input type="text" id="userQuestion" placeholder="Type a question..." required/>
-            <button type="button" onclick="submitForm()"><i class="fas fa-arrow-right"></i></button>
+            <button type="submit" onclick="submitForm()"><i class="fas fa-arrow-right"></i></button>
         </form>
         <div id="chatbotResponse" class="chat-display hidden"></div>
     </div>
+    
     <div class="full-page-section title-section bubble-background">
         <div>
             <h2><span class="highlight1">Dent</span><span class="highlight2">al</span> <span class="highlight1">A</span><span class="highlight2">rtificial</span> <span class="highlight1">I</span><span class="highlight2">ntelligence</span></h2>
@@ -243,7 +237,6 @@
     <section class="bubble-background">
         <h1>Welcome to Our Dental AI Service</h1>
         <p>Providing cutting-edge technology for dental diagnostics</p>
-        <!-- Other content -->
     </section>
     <script>
         function displayImage(input) {
@@ -278,3 +271,4 @@
     </script>
 </body>
 </html>
+
