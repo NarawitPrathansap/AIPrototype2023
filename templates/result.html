@@ -7,7 +7,14 @@
     <h1>Prediction Result</h1>
     <p><strong>Question:</strong> {{ question }}</p>
     <p><strong>Prediction:</strong> {{ prediction }}</p>
-    <img src="{{ image_url }}" alt="Uploaded Image" width="224" height="224">
+    
+    <!-- Display the original cropped image (right side) -->
+    <img src="{{ cropped_image_url }}" alt="Cropped Image" style="width:auto; height:auto; max-width:50%; max-height:100%; display:inline-block;">
+
+    <!-- Display the flipped image (left side) -->
+    <img src="{{ flipped_image_url }}" alt="Flipped Image" style="width:auto; height:auto; max-width:50%; max-height:100%; display:inline-block;">
+
+    <!-- Link to try another prediction -->
     <a href="{{ url_for('index') }}">Try another prediction</a>
 </body>
 </html>
