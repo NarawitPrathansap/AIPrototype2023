@@ -1,48 +1,35 @@
-import sqlite3 #sql 
-from flask import Flask, request, render_template, url_for,redirect
-import sys
-import json
+from flask import Flask, request, render_template_string, jsonify
 import os
 
 app = Flask(__name__)
 
-# This is the path where you want to save the uploaded files
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# Configuration for file uploads
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
-# Ensure the upload folder exists
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-#model = tf.keras.models.load_model('path/to/your/model.h5')
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
+@app.route('/')
+def index():
+    with open('web.html', 'r') as file:
+        return render_template_string(file.read())
 
-@app.route("/home")  
-def homefn():
-    return render_template("web.html",title='home')
-
-@app.route('/submit', methods=['POST'])
-def submit_text_and_file():
-    # Check if the post request has the text part
-    if 'text_message' in request.form:
-        text_message = request.form['text_message']
-        print("Received text message:", text_message)
-
-    # Check if the post request has the file part
-    if 'file_upload' in request.files:
-        file = request.files['file_upload']
-        if file.filename != '':
-            # Save the file to the uploads folder
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filepath)
-            print(f"File {file.filename} uploaded successfully.")
-        else:
-            print("No file was uploaded.")
-
-    # Redirect or respond after handling the form submission
-    return redirect(url_for('submit_success'))
-
-@app.route('/submit-success')
-def submit_success():
-    return "Submission successful!"
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'userFile' not in request.files:
+        return jsonify({'error': 'No file part'})
+    file = request.files['userFile']
+    text = request.form['userQuestion']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+    if file and allowed_file(file.filename):
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filename)
+        # Process the text and file as needed
+        return jsonify({'message': 'File and text received', 'text': text})
+    else:
+        return jsonify({'error': 'File type not allowed'})
 
 
 if __name__ == "__main__":
