@@ -44,6 +44,7 @@ Interact with VMs and manage resources on the Azure cloud platform.[Azure](https
 - `htop`: คำสั่งที่ใช้ดูการทำงานของระบบ และเราสารมารถใช้เช็คได้ด้วยว่ามีใครเข้ามาในเครื่องของเราบ้าง.
 - `screen -S {name}`: คำสั่งที่ใช้สร้าง section ใหม่ขึ้นมาซึ่งจะแยกกับ section ที่เราใช้งานอยู่ // กด Crt+A พร้อมกัน และกด d ถ้าเราต้องการออกจาก screen นั้น.
 - `screen -R {name}`: คำสั่งที่ใช้สำหรับเข้าไปยัง screen // กด Crt+A พร้อมกัน และกด k ถ้าเราต้องการออกลบ screen นั้น.
+- `screen -list`: คำสั่งที่ใช้สำหรับ list รายชื่อ screen ทั้งหมดที่กำลังทำงาน.
 - `exit`: คำสั่งที่ใช้สำหรับออกจาก vm.
 
 ## :snake: Setup Environment with Miniconda
