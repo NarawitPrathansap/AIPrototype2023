@@ -4,8 +4,8 @@ Github นี้เป็นส่วนหนึ่งของรายวิ�
 
 ## Table of Contents
 - [:penguin: Linux (Ubuntu) Commands](#penguin-linux-ubuntu-commands)
-  - [Basic Command Line Operations](#basic-command-line-operations)
-  - [Ubuntu](#ubuntu)
+  - [🤖 Basic Command Line Operations](#-basic-command-line-operations)
+  - [📂 Ubuntu](#-ubuntu)
 - [:cloud: Azure Cloud Operations](#cloud-azure-cloud-operations)
 - [:snake: Setup Environment with Miniconda](#snake-setup-environment-with-miniconda)
 - [:octocat: Github setup](#octocat-github-setup)
@@ -15,7 +15,7 @@ Github นี้เป็นส่วนหนึ่งของรายวิ�
 - [:globe_with_meridians: Web Application](#globe_with_meridians-web-application)
 
 ## :penguin: Linux (Ubuntu) Commands
-### Basic Command Line Operations
+### 🤖 Basic Command Line Operations
 Terminal คือสะพานที่เชื่อมระหว่างคนกับคอมพิวเตอร์เครื่องอื่น ๆ และในคำสั่งสำหรับ linux จะมีสองส่วนที่สำคัญคือ {คำสั่ง} {option}
 
 - `ls`: list ไฟล์ทั้งหมดที่อยู่ใน directory นั้น.
@@ -29,7 +29,7 @@ Terminal คือสะพานที่เชื่อมระหว่า�
 - `mv`: คำสั่งที่ใช้สำหรับการย้ายไฟล์.
 - `code` : เป็นคำสั่งที่ใช้สำหรับรัน vscode บน linux
 
-### Ubuntu
+### 📂 Ubuntu
 - [Argparse](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/firstpy.py)
 - [Flask](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/firstclass.py)
 - [Python subprocess](https://github.com/NarawitPrathansap/AIPrototype2023/blob/main/python_subprocess.py)
