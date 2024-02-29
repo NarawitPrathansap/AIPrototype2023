@@ -1,14 +1,194 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Prediction App</title>
+    <title>DENTAI - Image Prediction App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- FontAwesome for icons -->
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            padding-top: 50px;
+            background-color: #f0f0f0;
+            color: #000;
+            
+        }
+        .app-name, h1 {
+            margin: 20px 0; /* Add some space around the application name */
+            font-size: 120px; /* Increase the font size of the application name */
+            font-style: Italic;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
+            margin: 20px auto;
+            display: block; /* Ensure the logo is block level for auto margins to center it */
+            border-radius: 50%; /* Makes the image round */
+            object-fit: cover; /* Ensures the image covers the area without losing its aspect ratio */
+        }
+        .form-container {
+            margin: 20px auto;
+            width: fit-content;
+            position: relative; /* Needed for absolute positioning of the icon */
+        }
+        input[type="text"], input[type="file"] {
+            width: 80%; /* Adjusts the width of the input fields */
+            margin: 10px 0; /* Adds margin above and below each input field */
+            padding: 10px; /* Adds padding inside the input fields */
+            border: 1px solid #ccc; /* Defines a border for the input fields */
+            border-radius: 5px; /* Rounds the corners of the input fields */
+            box-sizing: border-box; /* Ensures padding does not affect the total width of the input fields */
+        }
+        input[type="submit"] {
+            padding: 12px 20px; /* Adjusts padding to match the height of the text input field */
+            background-color: #0084ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .send-icon {
+            position: absolute;
+            right: -25px;
+            top: 53%;
+            transform: translateY(-50%);
+            color: #333;
+            cursor: pointer;
+        }
+        input[type="submit"] {
+            display: none; /* Hide the original submit button */
+        }
+        /* Light theme styles */
+        body.light-theme {
+            background-color: #f0f0f0;
+            color: #000;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        /* Dark theme styles */
+        body.dark-theme {
+            background-color: #333;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-theme .send-icon {
+            color: #fff; /* Change color for dark theme */
+        }
+        body.dark-theme .file-upload-label {
+            color: #fff; /* Ensures good visibility on dark backgrounds */
+        }       
+        .theme-toggle {
+            position: fixed; /* Position the button relative to the viewport */
+            cursor: pointer;
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+            z-index: 1000; /* Ensure the button is always on top */
+        }
+        input[type="text"] {
+            width: 500px; /* Increased width */
+            padding: 10px 40px 10px 10px; /* Adjust padding to make room for the icon */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .file-upload-label {
+            cursor: pointer;
+            color: #333; /* Icon color */
+            font-size: 24px; /* Icon size */
+            position: absolute;
+            right: 515px;
+            top: 30%;
+        }
+        .file-upload-label:hover {
+            color: #000; /* Icon hover color */
+        }
+    </style>
 </head>
-<body>
-    <h1>Upload Image and Ask a Question</h1>
-    <form action="/predict" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" required>
-        <input type="text" name="question" placeholder="Enter your question" required>
-        <input type="submit">
-    </form>
+<body class="dark-theme">
+
+    <button onclick="toggleTheme()" class="theme-toggle">Toggle Theme</button>
+
+    <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/logo_app.jpg" alt="DENTAI Logo" class="logo">
+    <h1>DENTAI</h1>
+    <div class="form-container">
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <label for="file-upload" class="file-upload-label">
+                <i class="fas fa-cloud-upload-alt"></i> <!-- Upload icon -->
+            </label>
+            <input id="file-upload" type="file" name="image" onchange="previewImage();" required style="display: none;">
+            <div id="image-preview-container" style="display: none;">
+                <img id="image-preview" src="" alt="Image preview" style="max-width: 100px; max-height: 100px;" />
+            </div>
+            <div id="loading-indicator" style="display: none;">
+                <div class="loader"></div>
+            </div>
+            <input type="text" name="question" placeholder="Enter your question" required><br>
+            <i class="fas fa-paper-plane send-icon" onclick="submitForm();"></i>
+        </form>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.className;
+            body.className = currentTheme === "light-theme" ? "dark-theme" : "light-theme";
+        }
+        function previewImage() {
+        var file = document.getElementById('file-upload').files[0];
+        var preview = document.getElementById('image-preview');
+        var reader = new FileReader();
+        
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            document.getElementById('image-preview-container').style.display = 'block';
+            adjustElementsPosition(true); // Adjust positions when image is displayed
+        };
+        
+        if (file) {
+            reader.readAsDataURL(file);
+            document.getElementById('loading-indicator').style.display = 'none';
+        } else {
+            preview.src = "";
+            document.getElementById('image-preview-container').style.display = 'none';
+            adjustElementsPosition(false); // Reset positions when no image is displayed
+        }
+    }
+
+    function adjustElementsPosition(isImageDisplayed) {
+        var sendIcon = document.querySelector('.send-icon');
+        var uploadLabel = document.querySelector('.file-upload-label');
+        
+        if (isImageDisplayed) {
+            // Adjust positions based on your layout requirements when image is displayed
+            sendIcon.style.top = '73%'; // Example adjustment
+            uploadLabel.style.top = '64%'; // Example adjustment
+        } else {
+            // Reset positions to default when no image is displayed
+            sendIcon.style.top = '53%'; // Reset to original position
+            uploadLabel.style.top = '30%'; // Reset to original position
+        }
+    }
+
+    
+    function submitForm() {
+    var fileInput = document.getElementById('file-upload');
+    var questionInput = document.querySelector('input[name="question"]');
+    var form = document.querySelector('form');
+
+    // Check if both an image is selected and the text input is not empty
+    if (fileInput.files.length > 0 && questionInput.value.trim() !== '') {
+        // Directly submit the form
+        form.submit();
+    } else {
+        // Alert the user if either the image or text is missing
+        alert('Please select an image and enter your question before submitting.');
+    }
+}
+
+    </script>
+
 </body>
 </html>
