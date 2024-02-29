@@ -59,10 +59,20 @@ def predict():
             new_image_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
             new_image.save(new_image_path)
 
-            image_url = url_for('uploaded_file', filename=new_filename)
+            # Generate URLs for the images
+            cropped_image_url = url_for('uploaded_file', filename=filename)  # The original image
+            flipped_image_url = url_for('uploaded_file', filename=new_filename)  # The modified image
+
+            # Print the received question for debugging
             print("Received question:", question)
             prediction = "Dummy prediction result"  # Replace with your model's prediction logic
-            return render_template('result.html', image_url=image_url, question=question, prediction=prediction)
+
+            # Render the result template with the image URLs
+            return render_template('result.html', 
+                                   cropped_image_url=cropped_image_url,
+                                   flipped_image_url=flipped_image_url,
+                                   question=question, 
+                                   prediction=prediction)
         else:
             print('File type not allowed')
             return redirect(request.url)
