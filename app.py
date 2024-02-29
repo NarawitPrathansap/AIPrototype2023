@@ -68,10 +68,10 @@ def predict():
 
             # Render the result template with the image URLs
             return render_template('result.html', 
-                                   cropped_image_url=left_image_url,
-                                   flipped_image_url=right_image_url,
-                                   question=question, 
-                                   prediction=prediction)
+                                left_image_url=url_for('uploaded_file', filename='left_' + filename),
+                                right_image_url=url_for('uploaded_file', filename='right_' + filename),
+                                question=question, 
+                                prediction=prediction)
         else:
             print('File type not allowed')
             return redirect(request.url)
