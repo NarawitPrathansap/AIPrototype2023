@@ -43,25 +43,24 @@ def predict():
             frac = 0.6
 
             # Correct the crop method call, should use a tuple for the box
-            cropped_left = img.crop((0, 0, width * frac, height))
-            cropped_right = img.crop((width * (1 - frac), 0, width, height))
+            # Crop 60% from the left of the image
+            crop_left_width = int(width * frac)
+            cropped_left = img.crop((0, 0, crop_left_width, height))
+            left_filename = 'left_' + filename
+            left_image_path = os.path.join(app.config['UPLOAD_FOLDER'], left_filename)
+            cropped_left.save(left_image_path)
 
-            # Flip the right side
-            flipped_left_side = cropped_right.transpose(Image.FLIP_LEFT_RIGHT)
-
-            # Create a new image and paste the flipped side
-            new_image = Image.new('RGB', (width, height))
-            new_image.paste(cropped_left, (0, 0))  # Paste the original left side
-            new_image.paste(flipped_left_side, (int(width * frac), 0))  # Correct the position to paste the flipped side
-
-            # Save the modified image
-            new_filename = 'modified_' + filename
-            new_image_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
-            new_image.save(new_image_path)
+            # Crop 60% from the right of the image and flip it
+            crop_right_width = width - crop_left_width
+            cropped_right = img.crop((crop_right_width, 0, width, height))
+            flipped_right_side = cropped_right.transpose(Image.FLIP_LEFT_RIGHT)
+            right_filename = 'right_' + filename
+            right_image_path = os.path.join(app.config['UPLOAD_FOLDER'], right_filename)
+            flipped_right_side.save(right_image_path)
 
             # Generate URLs for the images
-            cropped_image_url = url_for('uploaded_file', filename=filename)  # The original image
-            flipped_image_url = url_for('uploaded_file', filename=new_filename)  # The modified image
+            left_image_url = url_for('uploaded_file', filename=left_filename)
+            right_image_url = url_for('uploaded_file', filename=right_filename)
 
             # Print the received question for debugging
             print("Received question:", question)
@@ -69,8 +68,8 @@ def predict():
 
             # Render the result template with the image URLs
             return render_template('result.html', 
-                                   cropped_image_url=cropped_image_url,
-                                   flipped_image_url=flipped_image_url,
+                                   cropped_image_url=left_image_url,
+                                   flipped_image_url=right_image_url,
                                    question=question, 
                                    prediction=prediction)
         else:
