@@ -74,7 +74,26 @@
         }
         body.dark-theme .file-upload-label {
             color: #fff; /* Ensures good visibility on dark backgrounds */
-        }       
+        }
+        /* Dark theme styles for highlighted text */
+        body.dark-theme .highlight1 {
+            color: #4a3ef6; /* Adjusted color for dark theme visibility */
+        }
+        body.dark-theme .highlight2 {
+            color: #fff568; /* Adjusted color for dark theme visibility */
+        
+        }
+        /* Light theme text color adjustments */
+        body.light-theme {
+            color: #000; /* Ensure dark text for light theme */
+        }
+
+        body.light-theme h3 {
+            color: #000; /* Explicitly set dark text color for h3 tags in light theme */
+        }
+        body.light-theme h4 {
+            color: #000; /* Explicitly set dark text color for h3 tags in light theme */
+        }    
         .theme-toggle {
             position: fixed; /* Position the button relative to the viewport */
             cursor: pointer;
@@ -105,11 +124,62 @@
         .file-upload-label:hover {
             color: #000; /* Icon hover color */
         }
+        .full-page-section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        h2 {
+            font-size: 5em;
+            margin: 0.5em 0;
+            font-style: italic;
+        }
+        h3 {
+            font-size: 3em;
+            margin: 0.5em 0;
+            font-style: italic;
+        }
+        h4 {
+            font-size: 3.5em;
+            margin: 0.5em 0;
+            font-style: italic;
+        }
+        .highlight1 {
+            color: #534ee0; /* Change this to your preferred color */
+        }
+        .highlight2 {
+            color: #db9b2d; /* Change this to your preferred color */
+        }
+        #age-gender-estimation {
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f0f0f0; /* Light background for the light theme */
+            color: #000; /* Dark text for the light theme */
+        }
+
+        body.dark-theme #age-gender-estimation {
+            background-color: #333; /* Dark background for the dark theme */
+            color: #fff; /* Light text for the dark theme */
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        body.dark-theme a {
+            color: #4ea8de;
+        }
     </style>
 </head>
 <body class="dark-theme">
 
-    <button onclick="toggleTheme()" class="theme-toggle">Toggle Theme</button>
+    <button onclick="toggleTheme()" class="theme-toggle">
+        <i class="fas fa-moon" id="moon-icon"></i> <!-- Moon icon for dark theme -->
+        <i class="fas fa-sun" id="sun-icon" style="display: none;"></i> <!-- Sun icon for light theme -->
+    </button>
 
     <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/logo_app.jpg" alt="DENTAI Logo" class="logo">
     <h1>DENTAI</h1>
@@ -130,11 +200,31 @@
         </form>
     </div>
 
+
+    <div class="full-page-section">
+        <div>
+            <h2><span class="highlight1">Dent</span><span class="highlight2">al</span> <span class="highlight1">A</span><span class="highlight2">rtificial</span> <span class="highlight1">I</span><span class="highlight2">ntelligence</span></h2>
+            <h3>Deep Age and Gender estimation</h3> 
+            <h3>via panoramic radiograph</h3>
+        </div>
+    </div>
+    <section id="age-gender-estimation" style="padding: 20px; text-align: center;">
+        <h4>Application for estimation age and gender</h4>
+        <p>For more information, visit our <a href="https://nattntn.github.io/Interpretable_Deep_Neural_Networks_for_Age_and_Gender_Estimation_via_Panoramic_Radiographs/#" target="_blank" rel="noopener noreferrer">DentAI webpage</a>.</p>
+    </section>
+    
+
     <script>
         function toggleTheme() {
             const body = document.body;
             const currentTheme = body.className;
-            body.className = currentTheme === "light-theme" ? "dark-theme" : "light-theme";
+            const isLightTheme = currentTheme === "light-theme";
+            
+            body.className = isLightTheme ? "dark-theme" : "light-theme";
+            
+            // Toggle icons based on the theme
+            document.getElementById('moon-icon').style.display = isLightTheme ? 'inline-block' : 'none';
+            document.getElementById('sun-icon').style.display = isLightTheme ? 'none' : 'inline-block';
         }
         function previewImage() {
         var file = document.getElementById('file-upload').files[0];
