@@ -47,9 +47,10 @@
             cursor: pointer;
         }
         .send-icon {
+        	font-size: 20px;
             position: absolute;
-            right: -25px;
-            top: 53%;
+            right: -27px;
+            top: 30px;
             transform: translateY(-50%);
             color: #333;
             cursor: pointer;
@@ -118,8 +119,8 @@
             color: #333; /* Icon color */
             font-size: 24px; /* Icon size */
             position: absolute;
-            right: 515px;
-            top: 30%;
+            right: 510px;
+            top: 15px;
         }
         .file-upload-label:hover {
             color: #000; /* Icon hover color */
@@ -172,6 +173,7 @@
         body.dark-theme a {
             color: #4ea8de;
         }
+
     </style>
 </head>
 <body class="dark-theme">
@@ -189,8 +191,9 @@
                 <i class="fas fa-cloud-upload-alt"></i> <!-- Upload icon -->
             </label>
             <input id="file-upload" type="file" name="image" onchange="previewImage();" required style="display: none;">
-            <div id="image-preview-container" style="display: none;">
-                <img id="image-preview" src="" alt="Image preview" style="max-width: 100px; max-height: 100px;" />
+            <div id="image-preview-container" style="display: none; position: relative;">
+                <img id="image-preview" src="" alt="Image preview" style="width: 150px; height: 150px; object-fit: contain;" />
+                <i class="fas fa-times-circle" id="remove-image" style="position: absolute; top: 0; right: 0; cursor: pointer; color: rgb(226, 25, 109); font-size: 24px; display: none;"></i>
             </div>
             <div id="loading-indicator" style="display: none;">
                 <div class="loader"></div>
@@ -226,41 +229,72 @@
             document.getElementById('moon-icon').style.display = isLightTheme ? 'inline-block' : 'none';
             document.getElementById('sun-icon').style.display = isLightTheme ? 'none' : 'inline-block';
         }
+        let lastImageUrl = null; // Global variable to store the URL of the last successfully previewed image
+
         function previewImage() {
-        var file = document.getElementById('file-upload').files[0];
-        var preview = document.getElementById('image-preview');
-        var reader = new FileReader();
-        
-        reader.onloadend = function () {
-            preview.src = reader.result;
-            document.getElementById('image-preview-container').style.display = 'block';
-            adjustElementsPosition(true); // Adjust positions when image is displayed
-        };
-        
-        if (file) {
-            reader.readAsDataURL(file);
-            document.getElementById('loading-indicator').style.display = 'none';
-        } else {
+            var file = document.getElementById('file-upload').files[0];
+            var preview = document.getElementById('image-preview');
+            var reader = new FileReader();
+            var removeIcon = document.getElementById('remove-image');
+            
+            reader.onloadend = function () {
+                if (reader.result) {
+                    preview.src = reader.result;
+                    document.getElementById('image-preview-container').style.display = 'block';
+                    removeIcon.style.display = 'block'; // Show the remove icon
+                    adjustElementsPosition(true); // Adjust positions when image is displayed
+                } else {
+                    clearImagePreview(); // Call a function to clear the image preview
+                }
+            };
+            
+            if (file) {
+                reader.readAsDataURL(file);
+                document.getElementById('loading-indicator').style.display = 'none';
+            } else {
+                clearImagePreview(); // Call a function to clear the image preview
+            }
+        }
+
+        // Function to clear the image preview and reset file input
+        function clearImagePreview() {
+            var preview = document.getElementById('image-preview');
+            var fileInput = document.getElementById('file-upload');
+            var removeIcon = document.getElementById('remove-image');
+
             preview.src = "";
             document.getElementById('image-preview-container').style.display = 'none';
+            removeIcon.style.display = 'none'; // Hide the remove icon
+            fileInput.value = ""; // Reset file input
             adjustElementsPosition(false); // Reset positions when no image is displayed
         }
-    }
+
+        // Add click event listener to the remove icon
+        document.getElementById('remove-image').addEventListener('click', clearImagePreview);
+
 
     function adjustElementsPosition(isImageDisplayed) {
         var sendIcon = document.querySelector('.send-icon');
         var uploadLabel = document.querySelector('.file-upload-label');
-        
-        if (isImageDisplayed) {
-            // Adjust positions based on your layout requirements when image is displayed
-            sendIcon.style.top = '73%'; // Example adjustment
-            uploadLabel.style.top = '64%'; // Example adjustment
-        } else {
-            // Reset positions to default when no image is displayed
-            sendIcon.style.top = '53%'; // Reset to original position
-            uploadLabel.style.top = '30%'; // Reset to original position
-        }
+        var questionInput = document.querySelector('input[name="question"]');
+        var inputBoxRect = questionInput.getBoundingClientRect(); // Get the bounding rectangle of the input box
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop; // Get the current scroll position
+
+        // Calculate the adjusted top position based on scroll
+        var adjustedTop = inputBoxRect.top + scrollTop - 50; // Adjust the 50 as needed
+
+        // Apply the calculated top position to the icons
+        sendIcon.style.top = `${adjustedTop}px`;
+        uploadLabel.style.top = `${adjustedTop}px`;
     }
+
+    // Listen for scroll events on the window and adjust the icon positions accordingly
+    window.addEventListener('scroll', function() {
+        adjustElementsPosition(document.getElementById('image-preview-container').style.display !== 'none');
+    });
+
+    // Initial call to ensure positions are correct on page load
+    adjustElementsPosition(false);
 
     
     function submitForm() {
