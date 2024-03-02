@@ -10,7 +10,7 @@
             padding-top: 50px;
             background-color: #f0f0f0;
             color: #000;
-            
+
         }
         .app-name, h1 {
             margin: 20px 0; /* Add some space around the application name */
@@ -47,9 +47,9 @@
             cursor: pointer;
         }
         .send-icon {
-        	font-size: 20px;
+            font-size: 20px;
             position: absolute;
-            right: -27px;
+            right: -30px;
             top: 30px;
             transform: translateY(-50%);
             color: #333;
@@ -82,7 +82,7 @@
         }
         body.dark-theme .highlight2 {
             color: #fff568; /* Adjusted color for dark theme visibility */
-        
+
         }
         /* Light theme text color adjustments */
         body.light-theme {
@@ -115,12 +115,14 @@
             box-sizing: border-box;
         }
         .file-upload-label {
+            font-size: 20px;
             cursor: pointer;
             color: #333; /* Icon color */
             font-size: 24px; /* Icon size */
             position: absolute;
-            right: 510px;
-            top: 15px;
+            right: 510px; 
+            top: 30px;
+            transform: translateY(-50%);
         }
         .file-upload-label:hover {
             color: #000; /* Icon hover color */
@@ -215,47 +217,51 @@
         <h4>Application for estimation age and gender</h4>
         <p>For more information, visit our <a href="https://nattntn.github.io/Interpretable_Deep_Neural_Networks_for_Age_and_Gender_Estimation_via_Panoramic_Radiographs/#" target="_blank" rel="noopener noreferrer">DentAI webpage</a>.</p>
     </section>
-    
+
 
     <script>
         function toggleTheme() {
             const body = document.body;
             const currentTheme = body.className;
             const isLightTheme = currentTheme === "light-theme";
-            
+
             body.className = isLightTheme ? "dark-theme" : "light-theme";
-            
+
             // Toggle icons based on the theme
             document.getElementById('moon-icon').style.display = isLightTheme ? 'inline-block' : 'none';
             document.getElementById('sun-icon').style.display = isLightTheme ? 'none' : 'inline-block';
         }
         let lastImageUrl = null; // Global variable to store the URL of the last successfully previewed image
-
         function previewImage() {
             var file = document.getElementById('file-upload').files[0];
             var preview = document.getElementById('image-preview');
             var reader = new FileReader();
             var removeIcon = document.getElementById('remove-image');
-            
-            reader.onloadend = function () {
-                if (reader.result) {
-                    preview.src = reader.result;
-                    document.getElementById('image-preview-container').style.display = 'block';
-                    removeIcon.style.display = 'block'; // Show the remove icon
-                    adjustElementsPosition(true); // Adjust positions when image is displayed
-                } else {
-                    clearImagePreview(); // Call a function to clear the image preview
-                }
-            };
-            
+
+            // Only proceed if a file is selected
             if (file) {
+                reader.onloadend = function () {
+                    if (reader.result) {
+                        lastImageUrl = reader.result; // Update global variable with new image URL
+                        preview.src = reader.result;
+                        document.getElementById('image-preview-container').style.display = 'block';
+                        removeIcon.style.display = 'block'; // Show the remove icon
+                        adjustElementsPosition(); // Recalculate positions
+                    }
+                };
                 reader.readAsDataURL(file);
-                document.getElementById('loading-indicator').style.display = 'none';
             } else {
-                clearImagePreview(); // Call a function to clear the image preview
+                // If no file is selected (e.g., dialog is cancelled), retain the last image
+                if (lastImageUrl) {
+                    preview.src = lastImageUrl; // Use the last successful image URL
+                    document.getElementById('image-preview-container').style.display = 'block';
+                    removeIcon.style.display = 'block';
+                    adjustElementsPosition(true);
+                } else {
+                    clearImagePreview(); // If there was no last image, clear the preview
+                }
             }
         }
-
         // Function to clear the image preview and reset file input
         function clearImagePreview() {
             var preview = document.getElementById('image-preview');
@@ -266,51 +272,52 @@
             document.getElementById('image-preview-container').style.display = 'none';
             removeIcon.style.display = 'none'; // Hide the remove icon
             fileInput.value = ""; // Reset file input
-            adjustElementsPosition(false); // Reset positions when no image is displayed
+            adjustElementsPosition(); // Recalculate positions after clearing the preview
         }
 
         // Add click event listener to the remove icon
         document.getElementById('remove-image').addEventListener('click', clearImagePreview);
 
-
-    function adjustElementsPosition(isImageDisplayed) {
+    function adjustElementsPosition() {
         var sendIcon = document.querySelector('.send-icon');
         var uploadLabel = document.querySelector('.file-upload-label');
+        var formContainer = document.querySelector('.form-container');
         var questionInput = document.querySelector('input[name="question"]');
-        var inputBoxRect = questionInput.getBoundingClientRect(); // Get the bounding rectangle of the input box
-        var scrollTop = window.pageYOffset || document.documentElement.scrollTop; // Get the current scroll position
+        var imagePreviewContainer = document.getElementById('image-preview-container');
+        var containerVisible = imagePreviewContainer.style.display !== 'none';
 
-        // Calculate the adjusted top position based on scroll
-        var adjustedTop = inputBoxRect.top + scrollTop - 50; // Adjust the 50 as needed
+        // Get the coordinates of the form container and question input
+        var containerRect = formContainer.getBoundingClientRect();
+        var questionInputRect = questionInput.getBoundingClientRect();
 
-        // Apply the calculated top position to the icons
-        sendIcon.style.top = `${adjustedTop}px`;
-        uploadLabel.style.top = `${adjustedTop}px`;
+        // Calculate the new top position for the icons, aligning them with the question input
+        var iconTopPosition = questionInputRect.top - containerRect.top + (questionInputRect.height / 2);
+
+        // Apply the calculated top position to the send icon
+        sendIcon.style.top = iconTopPosition + 'px';
+
+        // Calculate the new left position for the upload icon, aligning it with the left edge of the question input
+        var uploadIconLeftPosition = questionInputRect.top - containerRect.top - uploadLabel.offsetWidth + 50; 
+
+        // Apply the calculated left position to the upload icon
+        uploadLabel.style.top = uploadIconLeftPosition + 'px';
     }
 
-    // Listen for scroll events on the window and adjust the icon positions accordingly
-    window.addEventListener('scroll', function() {
-        adjustElementsPosition(document.getElementById('image-preview-container').style.display !== 'none');
-    });
 
-    // Initial call to ensure positions are correct on page load
-    adjustElementsPosition(false);
-
-    
     function submitForm() {
-    var fileInput = document.getElementById('file-upload');
-    var questionInput = document.querySelector('input[name="question"]');
-    var form = document.querySelector('form');
+        var fileInput = document.getElementById('file-upload');
+        var questionInput = document.querySelector('input[name="question"]');
+        var form = document.querySelector('form');
 
-    // Check if both an image is selected and the text input is not empty
-    if (fileInput.files.length > 0 && questionInput.value.trim() !== '') {
-        // Directly submit the form
-        form.submit();
-    } else {
-        // Alert the user if either the image or text is missing
-        alert('Please select an image and enter your question before submitting.');
+        // Check if both an image is selected and the text input is not empty
+        if (fileInput.files.length > 0 && questionInput.value.trim() !== '') {
+            // Directly submit the form
+            form.submit();
+        } else {
+            // Alert the user if either the image or text is missing
+            alert('Please select an image and enter your question before submitting.');
+        }
     }
-}
 
     </script>
 
