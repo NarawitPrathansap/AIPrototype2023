@@ -1,18 +1,13 @@
-import os
-import sys
 import numpy as np
 from PIL import Image
 import tensorflow as tf
-from tensorflow.keras.utils import img_to_array
+from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 
-# Assuming the repository is cloned to a specific location, adjust this path as needed
-repo_path = '/content/gdrive/MyDrive/Tooth_Shap_GPT/Deep_tooth/Model/Unflipped_Regress_Age(7-23)/Duo/26_Multi_1e-6_250_Unfreeze.h5'
-sys.path.append(repo_path)
-
-# Import custom layers from the cloned repository
+# Correct the import paths according to your environment setup
+# If efficientnet is a custom module, ensure it's correctly installed or available in your project
 from efficientnet.layers import Swish, DropConnect
-from efficientnet.model import ConvKernelInitializer  # Assuming this is the correct name
+from efficientnet.model import ConvKernelInitializer
 
 # Register custom objects with TensorFlow
 custom_objects = {
