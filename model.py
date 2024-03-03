@@ -1,12 +1,30 @@
-# Importing required libs
-from keras.models import load_model
-from keras.utils import img_to_array
+import os
+import sys
 import numpy as np
 from PIL import Image
+import tensorflow as tf
+from tensorflow.keras.utils import img_to_array
+from tensorflow.keras.models import load_model
 
-# Load your pre-trained model
+# Assuming the repository is cloned to a specific location, adjust this path as needed
+repo_path = '/content/gdrive/MyDrive/Tooth_Shap_GPT/Deep_tooth/Model/Unflipped_Regress_Age(7-23)/Duo/26_Multi_1e-6_250_Unfreeze.h5'
+sys.path.append(repo_path)
+
+# Import custom layers from the cloned repository
+from efficientnet.layers import Swish, DropConnect
+from efficientnet.model import ConvKernelInitializer  # Assuming this is the correct name
+
+# Register custom objects with TensorFlow
+custom_objects = {
+    'ConvKernelInitializer': ConvKernelInitializer,
+    'Swish': Swish,
+    'DropConnect': DropConnect,
+}
+
+# Adjust this path to where your model is actually stored
 model_path = "/content/gdrive/MyDrive/Tooth_Shap_GPT/Deep_tooth/Model/Unflipped_Regress_Age(7-23)/Duo/26_Multi_1e-6_250_Unfreeze.h5"
-model = load_model(model_path)
+model = load_model(model_path, custom_objects=custom_objects)
+
 
 # Preparing and pre-processing the image
 def preprocess_img(img_path):
