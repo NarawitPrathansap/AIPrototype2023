@@ -6,13 +6,18 @@
 <body>
     <h1>Prediction Result</h1>
     <p><strong>Question:</strong> {{ question }}</p>
-    <p><strong>Prediction:</strong> {{ prediction }}</p>
     
-    <!-- Display the original cropped image (right side) -->
+    <!-- Display predictions for the left side of the image -->
+    <h2>Left Side Predictions</h2>
+    <p><strong>Age Prediction:</strong> {{ prediction_age1 }}</p>
+    <p><strong>Gender Prediction:</strong> {% if prediction_gender1 == 0 %} Female {% else %} Male {% endif %}</p>
     <img src="{{ left_image_url }}" alt="Left Image" style="width:auto; height:auto; max-width:50%; max-height:100%; display:inline-block;">
 
-    <!-- Display the flipped image (left side) -->
-    <img src="{{ right_image_url }}" alt="Rigth Image" style="width:auto; height:auto; max-width:50%; max-height:100%; display:inline-block;">
+    <!-- Display predictions for the right side of the image -->
+    <h2>Right Side Predictions</h2>
+    <p><strong>Age Prediction:</strong> {{ prediction_age2 }}</p>
+    <p><strong>Gender Prediction:</strong> {% if prediction_gender2 == 0 %} Female {% else %} Male {% endif %}</p>
+    <img src="{{ right_image_url }}" alt="Right Image" style="width:auto; height:auto; max-width:50%; max-height:100%; display:inline-block;">
 
     <!-- Link to try another prediction -->
     <a href="{{ url_for('index') }}">Try another prediction</a>
