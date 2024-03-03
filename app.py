@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for,send_from_directory
+from model import preprocess_img, predict_result
 from werkzeug.utils import secure_filename
 from PIL import Image
 import os
@@ -64,14 +65,21 @@ def predict():
 
             # Print the received question for debugging
             print("Received question:", question)
-            prediction = "Dummy prediction result"  # Replace with your model's prediction logic
-
+            #prediction = "Dummy prediction result"  # Replace with your model's prediction logic
+            # Preprocess both images
+            left_image_array = preprocess_img(left_image_path)
+            right_image_array = preprocess_img(right_image_path)
+            prediction_age1, prediction_gender1 = predict_result(left_image_array)
+            prediction_age2, prediction_gender2 = predict_result(right_image_array)
             # Render the result template with the image URLs
             return render_template('result.html', 
-                                left_image_url=url_for('uploaded_file', filename='left_' + filename),
-                                right_image_url=url_for('uploaded_file', filename='right_' + filename),
-                                question=question, 
-                                prediction=prediction)
+                                   left_image_url=url_for('uploaded_file', filename=left_filename),
+                                   right_image_url=url_for('uploaded_file', filename=right_filename),
+                                   question=question, 
+                                   prediction_age1=prediction_age1, 
+                                   prediction_gender1=prediction_gender1,
+                                   prediction_age2=prediction_age2, 
+                                   prediction_gender2=prediction_gender2)
         else:
             print('File type not allowed')
             return redirect(request.url)
