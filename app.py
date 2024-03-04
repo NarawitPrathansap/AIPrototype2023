@@ -28,7 +28,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 #subprocess.run(["cd","efficientnet_keras_transfer_learning/"])
 
 import sys
-sys.path.append('/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
+sys.path.append('./AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 
 from efficientnet.layers import Swish, DropConnect
 from efficientnet.model import ConvKernalInitializer
@@ -41,7 +41,7 @@ get_custom_objects().update({
 })
 
 
-model = tf.keras.models.load_model('/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
+model = tf.keras.models.load_model('./AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 
 # Preparing and pre-processing the image
 def preprocess_img(img_path):
