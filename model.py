@@ -1,8 +1,8 @@
 import numpy as np
 from PIL import Image
 import tensorflow as tf
-from tensorflow.keras.preprocessing import img_to_array
-from tensorflow.keras.models import load_model
+from keras.models import load_model
+from keras.utils import img_to_array
 
 import sys
 sys.path.append('/content/gdrive/MyDrive/tooth_information/26_Multi_1e-6_250_Unfreeze.h5')
