@@ -59,6 +59,25 @@
             font-size: 50px;
             font-style: Italic;
         }
+        .image-left-container {
+            text-align: left; 
+            margin-top: 20px;
+        }
+        .chat-bubble-container-left {
+            display: flex;
+            justify-content: flex-start; /* Aligns the chat bubble to the right */
+            margin-top: 20px;
+        }
+        .chat-bubble-left {
+            background-color: #e5e5ea;
+            border-radius: 20px;
+            padding: 20px 30px; /* Increased padding for a larger bubble */
+            color: #000;
+            max-width: 80%;
+            text-align: right;
+            font-size: 18px; /* Increased font size */
+            margin-right: 10px; /* Optional: Adjusts the right margin for aesthetics */
+        }
     </style>
 </head>
 <body>
@@ -75,6 +94,14 @@
         <div class="chat-bubble-container">
             <div class="chat-bubble">
                 <p><strong>Question:</strong> {{ question }}</p>
+            </div>
+        </div>
+        <div class="image-left-container">
+            <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/358690a3-463a-4b32-be7a-295252a0e290.jpg" alt="User Image" style="width:300; height:300; max-width:50%; max-height:100%; display:inline-block;">
+        </div>
+        <div class="chat-bubble-container-left">
+            <div class="chat-bubble-left">
+                <p><strong>Answer:</strong> {{ answer }}</p>
             </div>
         </div>
         
