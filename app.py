@@ -8,7 +8,7 @@ from tensorflow.keras.applications.efficientnet import preprocess_input
 #from tensorflow.keras.models import load_model
 import tensorflow as tf
 import numpy as np
-from efficientnet.tfkeras import EfficientNetB0
+from keras_efficientnets import EfficientNetB0 
 import subprocess
 import keras_efficientnets
 
@@ -33,14 +33,19 @@ from keras_efficientnets.model import ConvKernelInitializer
 from tensorflow.keras.utils import get_custom_objects
 
 get_custom_objects().update({
-    'ConvKernalInitializer': ConvKernalInitializer,
+    'ConvKernalInitializer': ConvKernelInitializer,
     'Swish': Swish,
     'DropConnect': DropConnect
 })
 
 
-model = tf.keras.models.load_model('/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
-model.make_predict_function()
+# Load the model with custom objects
+model_path = '/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5'
+model = tf.keras.models.load_model(model_path, custom_objects={
+    'ConvKernelInitializer': ConvKernelInitializer,
+    'Swish': Swish,
+    'DropConnect': DropConnect
+})
 
 # Preparing and pre-processing the image
 def preprocess_img(img_path):
