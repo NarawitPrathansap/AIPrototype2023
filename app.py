@@ -18,7 +18,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
 #ดึงข้อมูลใน Github มาใช้
-subprocess.run(["cd","AIPrototype2023"])
+#subprocess.run(["cd","AIPrototype2023"])
 if not os.path.isdir("efficientnet_keras_transfer_learning"):
  subprocess.run(["git","clone","https://github.com/Wanita-8943/efficientnet_keras_transfer_learning"])
  
