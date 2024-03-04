@@ -11,7 +11,8 @@ from tensorflow import keras
 import numpy as np
 from tensorflow.keras.applications import EfficientNetB0 
 import subprocess
-import keras_efficientnets
+#import keras_efficientnets
+import tensorflow.python.keras.utils as generic_utils
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -31,7 +32,7 @@ sys.path.append('/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 
 from keras_efficientnets.layers import Swish, DropConnect
 from keras_efficientnets.model import ConvKernelInitializer
-from tensorflow.python.keras.utils import get_custom_objects
+from tensorflow.keras.utils import get_custom_objects
 
 get_custom_objects().update({
     'ConvKernalInitializer': ConvKernelInitializer,
