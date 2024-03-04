@@ -3,9 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for,send_from_d
 from werkzeug.utils import secure_filename
 from PIL import Image
 import os
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.efficientnet import preprocess_input
-import tensorflow as tf
+#from tensorflow.keras.preprocessing import image
+#from tensorflow.keras.applications.efficientnet import preprocess_input
+#import tensorflow as tf
 import numpy as np
 
 app = Flask(__name__)
@@ -103,6 +103,7 @@ def predict():
             flipped_right_side.save(right_image_path)
 
             # Generate URLs for the images
+            image_url = url_for('uploaded_file', filename=filename)
             left_image_url = url_for('uploaded_file', filename=left_filename)
             right_image_url = url_for('uploaded_file', filename=right_filename)
 
@@ -116,8 +117,8 @@ def predict():
             #prediction_age2, prediction_gender2 = predict_result(right_image_array)
             # Render the result template with the image URLs
             return render_template('result.html', 
-                                   left_image_url=url_for('uploaded_file', filename=left_filename),
-                                   right_image_url=url_for('uploaded_file', filename=right_filename),
+                                   image_url=url_for('uploaded_file', filename=filename),
+                                   #right_image_url=url_for('uploaded_file', filename=right_filename),
                                    question=question,
                                    prediction=prediction 
                                    #prediction_age1=prediction_age1, 
