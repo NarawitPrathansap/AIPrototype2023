@@ -17,7 +17,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
 import sys
-sys.path.append('../AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
+sys.path.append('../AIPrototype2023/efficientnet_keras_transfer_learning')
 
 from efficientnet.layers import Swish, DropConnect
 from efficientnet.model import ConvKernalInitializer
@@ -113,10 +113,10 @@ def predict():
             print("Received question:", question)
             prediction = "Dummy prediction result"  # Replace with your model's prediction logic
             # Preprocess both images
-            #left_image_array = preprocess_img(left_image_path)
-            #right_image_array = preprocess_img(right_image_path)
-            #prediction_age1, prediction_gender1 = predict_result(left_image_array)
-            #prediction_age2, prediction_gender2 = predict_result(right_image_array)
+            left_image_array = preprocess_img(left_image_path)
+            right_image_array = preprocess_img(right_image_path)
+            prediction_age1, prediction_gender1 = predict_result(left_image_array)
+            prediction_age2, prediction_gender2 = predict_result(right_image_array)
             # Render the result template with the image URLs
             return render_template('result.html', 
                                    image_url=url_for('uploaded_file', filename=filename),
