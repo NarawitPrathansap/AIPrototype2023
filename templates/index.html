@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DENTAI - Image Prediction App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -50,7 +50,11 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        input[type="submit"], .btn {
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .btn {
             background-color: #4CAF50;
             color: white;
             padding: 14px 20px;
@@ -59,35 +63,21 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        input[type="submit"]:hover, .btn:hover {
+        .btn:hover {
             background-color: #45a049;
         }
-        .dark-theme {
-            background-color: #333;
-            color: #f4f4f4;
+        #image-preview-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
-        .light-theme {
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1000;
+        #image-preview {
+            max-width: 40%;
+            height: auto;
         }
     </style>
 </head>
-<body class="dark-theme">
-    <button onclick="toggleTheme()" class="theme-toggle">
-        <i class="fas fa-moon" id="moon-icon" style="display: none;"></i>
-        <i class="fas fa-sun" id="sun-icon"></i>
-    </button>
-
+<body>
     <div class="container">
         <header class="header">
             <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/logo_app.jpg" alt="DENTAI Logo" class="logo">
@@ -97,12 +87,14 @@
         <div class="form-container">
             <form action="/predict" method="post" enctype="multipart/form-data">
                 <input id="file-upload" type="file" name="image" onchange="previewImage();" required style="display: none;">
-                <label for="file-upload" class="btn file-upload-label"><i class="fas fa-cloud-upload-alt"></i> Upload Image</label>
+                <label for="file-upload" class="btn file-upload-label"><i class="fas fa-cloud-upload-alt"></i> Upload panoramic radiographs</label>
                 <div id="image-preview-container" style="display: none;">
-                    <img id="image-preview" alt="Image preview" style="max-width: 100%; height: auto; margin-top: 10px;" />
+                    <img id="image-preview" alt="Image preview" />
                 </div>
-                <input type="text" name="question" placeholder="Enter your question" required><br>
-                <input type="submit" class="btn" value="Submit">
+                <input type="text" name="question" placeholder="Enter your question (e.g. Based on the dental X-ray provided, can you determine the gender of the individual?)" required><br>
+                <div class="btn-container">
+                    <input type="submit" class="btn" value="Submit">
+                </div>
             </form>
         </div>
 
@@ -117,23 +109,6 @@
     </div>
 
     <script>
-        function toggleTheme() {
-            const body = document.body;
-            const moonIcon = document.getElementById('moon-icon');
-            const sunIcon = document.getElementById('sun-icon');
-            const isDarkTheme = body.classList.contains('dark-theme');
-
-            if (isDarkTheme) {
-                body.classList.replace('dark-theme', 'light-theme');
-                moonIcon.style.display = 'inline-block';
-                sunIcon.style.display = 'none';
-            } else {
-                body.classList.replace('light-theme', 'dark-theme');
-                moonIcon.style.display = 'none';
-                sunIcon.style.display = 'inline-block';
-            }
-        }
-
         function previewImage() {
             const file = document.getElementById('file-upload').files[0];
             const preview = document.getElementById('image-preview');
@@ -143,7 +118,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.src = e.target.result;
-                    previewContainer.style.display = 'block';
+                    previewContainer.style.display = 'flex'; // Changed from 'block' to 'flex' to center the image
                 };
                 reader.readAsDataURL(file);
             }
