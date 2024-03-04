@@ -17,7 +17,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
 import sys
-sys.path.append('../AIPrototype2023/efficientnet_keras_transfer_learning')
+sys.path.append('https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/efficientnet_keras_transfer_learning')
 
 from efficientnet.layers import Swish, DropConnect
 from efficientnet.model import ConvKernalInitializer
