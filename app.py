@@ -5,10 +5,10 @@ from werkzeug.utils import secure_filename
 from PIL import Image
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.efficientnet import preprocess_input
-from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import load_model
 import tensorflow as tf
 import numpy as np
-from tensorflow.keras.applications import EfficientNetB0
+#from tensorflow.keras.applications import EfficientNetB0
 import subprocess
 
 app = Flask(__name__)
@@ -19,10 +19,10 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 #ดึงข้อมูลใน Github มาใช้
 #subprocess.run(["cd","AIPrototype2023"])
-if not os.path.isdir("efficientnet_keras_transfer_learning"):
- subprocess.run(["git","clone","https://github.com/Wanita-8943/efficientnet_keras_transfer_learning"])
+#if not os.path.isdir("efficientnet_keras_transfer_learning"):
+# subprocess.run(["git","clone","https://github.com/Wanita-8943/efficientnet_keras_transfer_learning"])
  
-subprocess.run(["cd","efficientnet_keras_transfer_learning/"])
+#subprocess.run(["cd","efficientnet_keras_transfer_learning/"])
 
 import sys
 sys.path.append('/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
