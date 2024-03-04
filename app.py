@@ -14,43 +14,43 @@ app.config['UPLOAD_FOLDER'] = 'uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
-import sys
-sys.path.append('../AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
+#import sys
+#sys.path.append('../AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 
-from efficientnet.layers import Swish, DropConnect
-from efficientnet.model import ConvKernalInitializer
-from tensorflow.keras.utils import get_custom_objects
+#from efficientnet.layers import Swish, DropConnect
+#from efficientnet.model import ConvKernalInitializer
+#from tensorflow.keras.utils import get_custom_objects
 
-get_custom_objects().update({
-    'ConvKernalInitializer': ConvKernalInitializer,
-    'Swish': Swish,
-    'DropConnect':DropConnect
-})
+#get_custom_objects().update({
+#    'ConvKernalInitializer': ConvKernalInitializer,
+#    'Swish': Swish,
+#    'DropConnect':DropConnect
+#})
 
 
-model = tf.keras.models.load_model('../AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
-model.make_predict_function()
+#model = tf.keras.models.load_model('../AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
+#model.make_predict_function()
 
 # Preparing and pre-processing the image
-def preprocess_img(img_path):
-    img = Image.open(img_path)
-    img_resize = img.resize((224, 224))
-    img2arr = image.img_to_array(img_resize)
-    img_reshape = img2arr.reshape((1,) + img2arr.shape)
-    return img_reshape
+#def preprocess_img(img_path):
+#    img = Image.open(img_path)
+#    img_resize = img.resize((224, 224))
+#    img2arr = image.img_to_array(img_resize)
+#    img_reshape = img2arr.reshape((1,) + img2arr.shape)
+#    return img_reshape
 
 
-def predict_result(img_array):
-    predictions = model.predict(img_array)
-    prediction_age = predictions[0]
-    prediction_gender = predictions[1]
+#def predict_result(img_array):
+#    predictions = model.predict(img_array)
+#    prediction_age = predictions[0]
+#    prediction_gender = predictions[1]
 
     # Assuming your model returns age as a continuous value and gender as a probability that needs argmax
     # Adjust these lines according to your model's actual output format
-    age = prediction_age[0] # Assuming the first prediction is age as a continuous value
-    gender = np.argmax(prediction_gender[0], axis=-1)  # Assuming the second prediction is gender as a binary classification
+#    age = prediction_age[0] # Assuming the first prediction is age as a continuous value
+#    gender = np.argmax(prediction_gender[0], axis=-1)  # Assuming the second prediction is gender as a binary classification
 
-    return age, gender
+#    return age, gender
 
 
 def allowed_file(filename):
@@ -110,19 +110,19 @@ def predict():
             print("Received question:", question)
             #prediction = "Dummy prediction result"  # Replace with your model's prediction logic
             # Preprocess both images
-            left_image_array = preprocess_img(left_image_path)
-            right_image_array = preprocess_img(right_image_path)
-            prediction_age1, prediction_gender1 = predict_result(left_image_array)
-            prediction_age2, prediction_gender2 = predict_result(right_image_array)
+            #left_image_array = preprocess_img(left_image_path)
+            #right_image_array = preprocess_img(right_image_path)
+            #prediction_age1, prediction_gender1 = predict_result(left_image_array)
+            #prediction_age2, prediction_gender2 = predict_result(right_image_array)
             # Render the result template with the image URLs
             return render_template('result.html', 
                                    left_image_url=url_for('uploaded_file', filename=left_filename),
                                    right_image_url=url_for('uploaded_file', filename=right_filename),
                                    question=question, 
-                                   prediction_age1=prediction_age1, 
-                                   prediction_gender1=prediction_gender1,
-                                   prediction_age2=prediction_age2, 
-                                   prediction_gender2=prediction_gender2)
+                                   #prediction_age1=prediction_age1, 
+                                   #prediction_gender1=prediction_gender1,
+                                   #prediction_age2=prediction_age2, 
+                                   #prediction_gender2=prediction_gender2)
         else:
             print('File type not allowed')
             return redirect(request.url)
