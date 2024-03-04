@@ -8,8 +8,9 @@ from tensorflow.keras.applications.efficientnet import preprocess_input
 #from tensorflow.keras.models import load_model
 import tensorflow as tf
 import numpy as np
-#from tensorflow.keras.applications import EfficientNetB0
+from efficientnet.tfkeras import EfficientNetB0
 import subprocess
+import keras_efficientnets
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -27,8 +28,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 import sys
 sys.path.append('/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 
-from efficientnet.layers import Swish, DropConnect
-from efficientnet.model import ConvKernalInitializer
+from keras_efficientnets.layers import Swish, DropConnect
+from keras_efficientnets.model import ConvKernelInitializer
 from tensorflow.keras.utils import get_custom_objects
 
 get_custom_objects().update({
