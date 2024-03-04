@@ -7,10 +7,12 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.efficientnet import preprocess_input
 #from tensorflow.keras.models import load_model
 import tensorflow as tf
+from tensorflow import keras
 import numpy as np
-from keras_efficientnets import EfficientNetB0 
+from tensorflow.keras.applications import EfficientNetB0 
 import subprocess
 import keras_efficientnets
+import tensorflow.python.keras.utils as generic_utils
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -39,13 +41,7 @@ get_custom_objects().update({
 })
 
 
-# Load the model with custom objects
-model_path = '/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5'
-model = tf.keras.models.load_model(model_path, custom_objects={
-    'ConvKernelInitializer': ConvKernelInitializer,
-    'Swish': Swish,
-    'DropConnect': DropConnect
-})
+model = tf.keras.models.load_model('/root/AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 
 # Preparing and pre-processing the image
 def preprocess_img(img_path):
