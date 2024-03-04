@@ -1,325 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DENTAI - Image Prediction App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- FontAwesome for icons -->
     <style>
         body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            padding-top: 50px;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #f0f0f0;
-            color: #000;
-
+            color: #333;
+            line-height: 1.6;
         }
-        .app-name, h1 {
-            margin: 20px 0; /* Add some space around the application name */
-            font-size: 120px; /* Increase the font size of the application name */
-            font-style: Italic;
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 0 20px;
+        }
+        .header, .footer {
+            text-align: center;
+            padding: 20px 0;
         }
         .logo {
-            max-width: 200px;
-            height: auto;
-            margin: 20px auto;
-            display: block; /* Ensure the logo is block level for auto margins to center it */
-            border-radius: 50%; /* Makes the image round */
-            object-fit: cover; /* Ensures the image covers the area without losing its aspect ratio */
+            max-width: 100px;
+            border-radius: 50%;
         }
-        .form-container {
-            margin: 20px auto;
-            width: fit-content;
-            position: relative; /* Needed for absolute positioning of the icon */
+        @media (max-width: 768px) {
+            .header h1, .footer p {
+                font-size: 18px;
+            }
+            .logo {
+                max-width: 80px;
+            }
+        }
+        :focus {
+            outline: 3px solid #ffbf47;
+        }
+        a:hover, a:focus {
+            text-decoration: underline;
         }
         input[type="text"], input[type="file"] {
-            width: 80%; /* Adjusts the width of the input fields */
-            margin: 10px 0; /* Adds margin above and below each input field */
-            padding: 10px; /* Adds padding inside the input fields */
-            border: 1px solid #ccc; /* Defines a border for the input fields */
-            border-radius: 5px; /* Rounds the corners of the input fields */
-            box-sizing: border-box; /* Ensures padding does not affect the total width of the input fields */
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
-        input[type="submit"] {
-            padding: 12px 20px; /* Adjusts padding to match the height of the text input field */
-            background-color: #0084ff;
+        input[type="submit"], .btn {
+            background-color: #4CAF50;
             color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
         }
-        .send-icon {
-            font-size: 20px;
-            position: absolute;
-            right: -30px;
-            top: 30px;
-            transform: translateY(-50%);
+        input[type="submit"]:hover, .btn:hover {
+            background-color: #45a049;
+        }
+        .dark-theme {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+        .light-theme {
+            background-color: #f4f4f4;
             color: #333;
-            cursor: pointer;
         }
-        input[type="submit"] {
-            display: none; /* Hide the original submit button */
-        }
-        /* Light theme styles */
-        body.light-theme {
-            background-color: #f0f0f0;
-            color: #000;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        /* Dark theme styles */
-        body.dark-theme {
-            background-color: #000000;
-            color: #fff;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        body.dark-theme .send-icon {
-            color: #fff; /* Change color for dark theme */
-        }
-        body.dark-theme .file-upload-label {
-            color: #fff; /* Ensures good visibility on dark backgrounds */
-        }
-        /* Dark theme styles for highlighted text */
-        body.dark-theme .highlight1 {
-            color: #4a3ef6; /* Adjusted color for dark theme visibility */
-        }
-        body.dark-theme .highlight2 {
-            color: #fff568; /* Adjusted color for dark theme visibility */
-
-        }
-        /* Light theme text color adjustments */
-        body.light-theme {
-            color: #000; /* Ensure dark text for light theme */
-        }
-
-        body.light-theme h3 {
-            color: #000; /* Explicitly set dark text color for h3 tags in light theme */
-        }
-        body.light-theme h4 {
-            color: #000; /* Explicitly set dark text color for h3 tags in light theme */
-        }    
         .theme-toggle {
-            position: fixed; /* Position the button relative to the viewport */
-            cursor: pointer;
-            top: 20px; /* Distance from the top */
-            right: 20px; /* Distance from the right */
-            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             padding: 10px;
             border: none;
             border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
-            z-index: 1000; /* Ensure the button is always on top */
-        }
-        input[type="text"] {
-            width: 500px; /* Increased width */
-            padding: 10px 40px 10px 10px; /* Adjust padding to make room for the icon */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .file-upload-label {
-            font-size: 20px;
             cursor: pointer;
-            color: #333; /* Icon color */
-            font-size: 24px; /* Icon size */
-            position: absolute;
-            right: 510px; 
-            top: 30px;
-            transform: translateY(-50%);
+            z-index: 1000;
         }
-        .file-upload-label:hover {
-            color: #000; /* Icon hover color */
-        }
-        .full-page-section {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-        }
-        h2 {
-            font-size: 5em;
-            margin: 0.5em 0;
-            font-style: italic;
-        }
-        h3 {
-            font-size: 3em;
-            margin: 0.5em 0;
-            font-style: italic;
-        }
-        h4 {
-            font-size: 3.5em;
-            margin: 0.5em 0;
-            font-style: italic;
-        }
-        .highlight1 {
-            color: #534ee0; /* Change this to your preferred color */
-        }
-        .highlight2 {
-            color: #db9b2d; /* Change this to your preferred color */
-        }
-        #age-gender-estimation {
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #f0f0f0; /* Light background for the light theme */
-            color: #000; /* Dark text for the light theme */
-        }
-
-        body.dark-theme #age-gender-estimation {
-            background-color: #333; /* Dark background for the dark theme */
-            color: #fff; /* Light text for the dark theme */
-        }
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        body.dark-theme a {
-            color: #4ea8de;
-        }
-
     </style>
 </head>
 <body class="dark-theme">
-
     <button onclick="toggleTheme()" class="theme-toggle">
-        <i class="fas fa-moon" id="moon-icon"></i> <!-- Moon icon for dark theme -->
-        <i class="fas fa-sun" id="sun-icon" style="display: none;"></i> <!-- Sun icon for light theme -->
+        <i class="fas fa-moon" id="moon-icon" style="display: none;"></i>
+        <i class="fas fa-sun" id="sun-icon"></i>
     </button>
 
-    <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/logo_app.jpg" alt="DENTAI Logo" class="logo">
-    <h1>DENTAI</h1>
-    <div class="form-container">
-        <form action="/predict" method="post" enctype="multipart/form-data">
-            <label for="file-upload" class="file-upload-label">
-                <i class="fas fa-cloud-upload-alt"></i> <!-- Upload icon -->
-            </label>
-            <input id="file-upload" type="file" name="image" onchange="previewImage();" required style="display: none;">
-            <div id="image-preview-container" style="display: none; position: relative;">
-                <img id="image-preview" src="" alt="Image preview" style="width: 150px; height: 150px; object-fit: contain;" />
-                <i class="fas fa-times-circle" id="remove-image" style="position: absolute; top: 0; right: 0; cursor: pointer; color: rgb(226, 25, 109); font-size: 24px; display: none;"></i>
-            </div>
-            <div id="loading-indicator" style="display: none;">
-                <div class="loader"></div>
-            </div>
-            <input type="text" name="question" placeholder="Enter your question" required><br>
-            <i class="fas fa-paper-plane send-icon" onclick="submitForm();"></i>
-        </form>
-    </div>
+    <div class="container">
+        <header class="header">
+            <img src="https://raw.githubusercontent.com/NarawitPrathansap/AIPrototype2023/main/templates/logo_app.jpg" alt="DENTAI Logo" class="logo">
+            <h1>DENTAI</h1>
+        </header>
 
-
-    <div class="full-page-section">
-        <div>
-            <h2><span class="highlight1">Dent</span><span class="highlight2">al</span> <span class="highlight1">A</span><span class="highlight2">rtificial</span> <span class="highlight1">I</span><span class="highlight2">ntelligence</span></h2>
-            <h3>Deep Age and Gender estimation</h3> 
-            <h3>via panoramic radiograph</h3>
+        <div class="form-container">
+            <form action="/predict" method="post" enctype="multipart/form-data">
+                <input id="file-upload" type="file" name="image" onchange="previewImage();" required style="display: none;">
+                <label for="file-upload" class="btn file-upload-label"><i class="fas fa-cloud-upload-alt"></i> Upload Image</label>
+                <div id="image-preview-container" style="display: none;">
+                    <img id="image-preview" alt="Image preview" style="max-width: 100%; height: auto; margin-top: 10px;" />
+                </div>
+                <input type="text" name="question" placeholder="Enter your question" required><br>
+                <input type="submit" class="btn" value="Submit">
+            </form>
         </div>
-    </div>
-    <section id="age-gender-estimation" style="padding: 20px; text-align: center;">
-        <h4>Application for estimation age and gender</h4>
-        <p>For more information, visit our <a href="https://nattntn.github.io/Interpretable_Deep_Neural_Networks_for_Age_and_Gender_Estimation_via_Panoramic_Radiographs/#" target="_blank" rel="noopener noreferrer">DentAI webpage</a>.</p>
-    </section>
 
+        <section id="age-gender-estimation" style="text-align: center; margin-top: 20px;">
+            <h4>Application for estimation age and gender</h4>
+            <p>For more information, visit our <a href="https://nattntn.github.io/Interpretable_Deep_Neural_Networks_for_Age_and_Gender_Estimation_via_Panoramic_Radiographs/#" target="_blank" rel="noopener noreferrer">DentAI webpage</a>.</p>
+        </section>
+        
+        <footer class="footer">
+            <p>&copy; 2024 DENTAI. All rights reserved.</p>
+        </footer>
+    </div>
 
     <script>
         function toggleTheme() {
             const body = document.body;
-            const currentTheme = body.className;
-            const isLightTheme = currentTheme === "light-theme";
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('sun-icon');
+            const isDarkTheme = body.classList.contains('dark-theme');
 
-            body.className = isLightTheme ? "dark-theme" : "light-theme";
-
-            // Toggle icons based on the theme
-            document.getElementById('moon-icon').style.display = isLightTheme ? 'inline-block' : 'none';
-            document.getElementById('sun-icon').style.display = isLightTheme ? 'none' : 'inline-block';
-        }
-        let lastImageUrl = null; // Global variable to store the URL of the last successfully previewed image
-        function previewImage() {
-            var file = document.getElementById('file-upload').files[0];
-            var preview = document.getElementById('image-preview');
-            var reader = new FileReader();
-            var removeIcon = document.getElementById('remove-image');
-
-            // Only proceed if a file is selected
-            if (file) {
-                reader.onloadend = function () {
-                    if (reader.result) {
-                        lastImageUrl = reader.result; // Update global variable with new image URL
-                        preview.src = reader.result;
-                        document.getElementById('image-preview-container').style.display = 'block';
-                        removeIcon.style.display = 'block'; // Show the remove icon
-                        adjustElementsPosition(); // Recalculate positions
-                    }
-                };
-                reader.readAsDataURL(file);
+            if (isDarkTheme) {
+                body.classList.replace('dark-theme', 'light-theme');
+                moonIcon.style.display = 'inline-block';
+                sunIcon.style.display = 'none';
             } else {
-                // If no file is selected (e.g., dialog is cancelled), retain the last image
-                if (lastImageUrl) {
-                    preview.src = lastImageUrl; // Use the last successful image URL
-                    document.getElementById('image-preview-container').style.display = 'block';
-                    removeIcon.style.display = 'block';
-                    adjustElementsPosition(true);
-                } else {
-                    clearImagePreview(); // If there was no last image, clear the preview
-                }
+                body.classList.replace('light-theme', 'dark-theme');
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'inline-block';
             }
         }
-        // Function to clear the image preview and reset file input
-        function clearImagePreview() {
-            var preview = document.getElementById('image-preview');
-            var fileInput = document.getElementById('file-upload');
-            var removeIcon = document.getElementById('remove-image');
 
-            preview.src = "";
-            document.getElementById('image-preview-container').style.display = 'none';
-            removeIcon.style.display = 'none'; // Hide the remove icon
-            fileInput.value = ""; // Reset file input
-            adjustElementsPosition(); // Recalculate positions after clearing the preview
+        function previewImage() {
+            const file = document.getElementById('file-upload').files[0];
+            const preview = document.getElementById('image-preview');
+            const previewContainer = document.getElementById('image-preview-container');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
         }
-
-        // Add click event listener to the remove icon
-        document.getElementById('remove-image').addEventListener('click', clearImagePreview);
-
-    function adjustElementsPosition() {
-        var sendIcon = document.querySelector('.send-icon');
-        var uploadLabel = document.querySelector('.file-upload-label');
-        var formContainer = document.querySelector('.form-container');
-        var questionInput = document.querySelector('input[name="question"]');
-        var imagePreviewContainer = document.getElementById('image-preview-container');
-        var containerVisible = imagePreviewContainer.style.display !== 'none';
-
-        // Get the coordinates of the form container and question input
-        var containerRect = formContainer.getBoundingClientRect();
-        var questionInputRect = questionInput.getBoundingClientRect();
-
-        // Calculate the new top position for the icons, aligning them with the question input
-        var iconTopPosition = questionInputRect.top - containerRect.top + (questionInputRect.height / 2);
-
-        // Apply the calculated top position to the send icon
-        sendIcon.style.top = iconTopPosition + 'px';
-
-        // Calculate the new left position for the upload icon, aligning it with the left edge of the question input
-        var uploadIconLeftPosition = questionInputRect.top - containerRect.top - uploadLabel.offsetWidth + 50; 
-
-        // Apply the calculated left position to the upload icon
-        uploadLabel.style.top = uploadIconLeftPosition + 'px';
-    }
-
-
-    function submitForm() {
-        var fileInput = document.getElementById('file-upload');
-        var questionInput = document.querySelector('input[name="question"]');
-        var form = document.querySelector('form');
-
-        // Check if both an image is selected and the text input is not empty
-        if (fileInput.files.length > 0 && questionInput.value.trim() !== '') {
-            // Directly submit the form
-            form.submit();
-        } else {
-            // Alert the user if either the image or text is missing
-            alert('Please select an image and enter your question before submitting.');
-        }
-    }
-
     </script>
-
 </body>
 </html>
