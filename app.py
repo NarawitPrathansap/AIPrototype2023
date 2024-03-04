@@ -108,7 +108,7 @@ def predict():
 
             # Print the received question for debugging
             print("Received question:", question)
-            #prediction = "Dummy prediction result"  # Replace with your model's prediction logic
+            prediction = "Dummy prediction result"  # Replace with your model's prediction logic
             # Preprocess both images
             #left_image_array = preprocess_img(left_image_path)
             #right_image_array = preprocess_img(right_image_path)
@@ -118,11 +118,13 @@ def predict():
             return render_template('result.html', 
                                    left_image_url=url_for('uploaded_file', filename=left_filename),
                                    right_image_url=url_for('uploaded_file', filename=right_filename),
-                                   question=question, 
+                                   question=question,
+                                   prediction=prediction 
                                    #prediction_age1=prediction_age1, 
                                    #prediction_gender1=prediction_gender1,
                                    #prediction_age2=prediction_age2, 
                                    #prediction_gender2=prediction_gender2)
+            )
         else:
             print('File type not allowed')
             return redirect(request.url)
