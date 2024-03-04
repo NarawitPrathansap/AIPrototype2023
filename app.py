@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for,send_from_directory
-from model import preprocess_img, predict_result
+#from model import preprocess_img, predict_result
 from werkzeug.utils import secure_filename
 from PIL import Image
 import os
@@ -15,7 +15,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
 import sys
-sys.path.append('/content/gdrive/MyDrive/tooth_information/26_Multi_1e-6_250_Unfreeze.h5')
+sys.path.append('../AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 
 from efficientnet.layers import Swish, DropConnect
 from efficientnet.model import ConvKernalInitializer
@@ -28,7 +28,7 @@ get_custom_objects().update({
 })
 
 
-model = tf.keras.models.load_model('/content/gdrive/MyDrive/tooth_information/26_Multi_1e-6_250_Unfreeze.h5')
+model = tf.keras.models.load_model('../AIPrototype2023/26_Multi_1e-6_250_Unfreeze.h5')
 model.make_predict_function()
 
 # Preparing and pre-processing the image
