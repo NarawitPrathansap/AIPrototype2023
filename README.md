@@ -49,7 +49,7 @@ Interact with VMs and manage resources on the Azure cloud platform.[Azure](https
 
 ## :snake: Setup Environment with Miniconda
 
-ติดตั้ง miniconda เพื่อใช้งาน python environment และสำหรับจัดการ package บนเครื่องเรา 
+ติดตั้ง miniconda เพื่อใช้งาน python environment และสำหรับจัดการ package บนเครื่องเรา หลังติดตั้งเสร็จอย่าลืมกด restart vm ด้วย
 ต่อไปนี้เป็นวิธีการตั้งค่า:
 
 ```bash
